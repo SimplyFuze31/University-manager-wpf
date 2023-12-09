@@ -27,12 +27,12 @@ public class Department : EducationalInstitution
     }
     public override void PrintInfo()
     {
-        throw new NotImplementedException();
+        Console.WriteLine(this.ToString());
     }
 
     public override string ToString()
     {
-        return $"Назва кафедри: {name}\n" +
+        return $"Назва: {name}\n" +
                $"Завідувач кафедри: {headOfInstitution.ToString()}\n" +
                $"Кількість співробітників: {employeesnumber}\n" +
                $"Кількість студентів: {studentQuantity}\n" +

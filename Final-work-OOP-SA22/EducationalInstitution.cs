@@ -7,6 +7,11 @@ namespace Final_work_OOP_SA22
 
         protected string name;
         
+        public string Name
+        {
+            get { return name; }
+        }
+        
         protected AccreditationLevels accreditationLevel;
 
         protected readonly DateTime foundationDate;
