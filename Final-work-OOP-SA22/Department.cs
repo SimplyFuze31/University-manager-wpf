@@ -2,23 +2,30 @@
 
 public class Department 
 {
-    private string name;
+    private string _name;
         
     public string Name
     {
-        get { return name; }
+        get { return _name; }
     }
-    private int employeesnumber;
-    private int studentQuantity;
-
+    private int _numberofemployees;
+    public int NumberOfEmployees
+    {
+        get { return _numberofemployees; }
+    }
+    private int _numberofstudents;
+    public int NumberOfStudents
+    {
+        get { return _numberofstudents; }
+    }
     private Person headOfInstitution;
     private string phoneNumber;
     public Department(){}
-    public Department(string name, int studentQuantity, int employeesnumber, Person headOfInstitution,string phoneNumber) 
+    public Department(string name, int numberofstudents, int numberofemployees, Person headOfInstitution,string phoneNumber) 
     {
-        this.name = name;
-        this.studentQuantity = studentQuantity;
-        this.employeesnumber = employeesnumber;
+        this._name = name;
+        this._numberofstudents = numberofstudents;
+        this._numberofemployees = numberofemployees;
         this.headOfInstitution = headOfInstitution;
         this.phoneNumber = phoneNumber;
 
@@ -26,9 +33,9 @@ public class Department
 
     public Department(Department department) 
     {
-        name = department.name;
-        this.studentQuantity = department.studentQuantity;
-        this.employeesnumber = department.employeesnumber;
+        _name = department._name;
+        this._numberofstudents = department._numberofstudents;
+        this._numberofemployees = department._numberofemployees;
         this.headOfInstitution = department.headOfInstitution;
         this.phoneNumber = department.phoneNumber;
     }
@@ -36,10 +43,10 @@ public class Department
 
     public override string ToString()
     {
-        return $"Назва: {name}\n" +
-               $"Завідувач кафедри: {headOfInstitution.ToString()}\n" +
-               $"Кількість співробітників: {employeesnumber}\n" +
-               $"Кількість студентів: {studentQuantity}\n" +
-               $"Номер телефону: {phoneNumber}\n";
+        return $"\tНазва: {_name}\n" +
+               $"\tЗавідувач кафедри: {headOfInstitution.ToString()}\n" +
+               $"\tКількість співробітників: {NumberOfEmployees}\n" +
+               $"\tКількість студентів: {_numberofstudents}\n" +
+               $"\tНомер телефону: {phoneNumber}\n";
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Final_work_OOP_SA22
 { 
-    internal abstract class EducationalInstitution
+    public abstract class EducationalInstitution
     {
 
         protected string name;
@@ -16,11 +16,21 @@ namespace Final_work_OOP_SA22
 
         protected DateTime foundationDate;
 
-        protected int studentQuantity;
+        protected int _numberofstudents;
 
         protected Person headOfInstitution;
+        
+        public string HeadOfInstitution
+        {
+            get { return headOfInstitution.ToString(); }
+        }
 
         protected int rating;
+        
+        public int Rating
+        {
+            get { return rating; }
+        }
 
         protected string phoneNumber;
 
@@ -29,13 +39,14 @@ namespace Final_work_OOP_SA22
         }
 
         public EducationalInstitution(string name, AccreditationLevels accreditationLevel,
-            DateTime foundationDate, int studentQuantity, Person headOfInstitution,
+            DateTime foundationDate, Person headOfInstitution,
             int rating, string phoneNumber)
         {
             this.name = name;
             this.accreditationLevel = accreditationLevel;
             this.foundationDate = foundationDate;
-            this.studentQuantity = studentQuantity;
+            // TODO: Make student count
+
             this.headOfInstitution = headOfInstitution;
             this.rating = rating;
             this.phoneNumber = phoneNumber;
@@ -46,13 +57,15 @@ namespace Final_work_OOP_SA22
             name = institution.name;
             this.accreditationLevel = institution.accreditationLevel;
             this.foundationDate = institution.foundationDate;
-            this.studentQuantity = institution.studentQuantity;
+            this._numberofstudents = institution._numberofstudents;
             this.headOfInstitution = institution.headOfInstitution;
             this.rating = institution.rating;
             this.phoneNumber = institution.phoneNumber;
         }
         
         public abstract void RemoveDepartment(string departmentName);
+
+        public abstract int GetNumberOfStudents();
         public abstract void PrintInfo();
         
         
