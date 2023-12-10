@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Final-work-OOP-SA22", "Final-work-OOP-SA22\Final-work-OOP-SA22.csproj", "{75B626CC-D833-48B7-A9FE-678F16F1EA0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{918573C8-253E-45BE-A425-756CF041600A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{75B626CC-D833-48B7-A9FE-678F16F1EA0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75B626CC-D833-48B7-A9FE-678F16F1EA0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75B626CC-D833-48B7-A9FE-678F16F1EA0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{918573C8-253E-45BE-A425-756CF041600A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{918573C8-253E-45BE-A425-756CF041600A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{918573C8-253E-45BE-A425-756CF041600A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{918573C8-253E-45BE-A425-756CF041600A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
