@@ -1,8 +1,8 @@
 ﻿
 
 namespace Final_work_OOP_SA22
-{
-    public abstract class EducationalInstitution
+{ 
+    internal abstract class EducationalInstitution
     {
 
         protected string name;
@@ -14,7 +14,7 @@ namespace Final_work_OOP_SA22
         
         protected AccreditationLevels accreditationLevel;
 
-        protected readonly DateTime foundationDate;
+        protected DateTime foundationDate;
 
         protected int studentQuantity;
 
@@ -52,7 +52,10 @@ namespace Final_work_OOP_SA22
             this.phoneNumber = institution.phoneNumber;
         }
         
+        public abstract void RemoveDepartment(string departmentName);
         public abstract void PrintInfo();
+        
+        
     }
     
 }

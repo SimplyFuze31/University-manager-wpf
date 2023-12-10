@@ -1,15 +1,22 @@
 ﻿namespace Final_work_OOP_SA22;
 
-public class Department : EducationalInstitution
+public class Department 
 {
-    
-    protected int employeesnumber;
+    private string name;
+        
+    public string Name
+    {
+        get { return name; }
+    }
+    private int employeesnumber;
+    private int studentQuantity;
 
-
+    private Person headOfInstitution;
+    private string phoneNumber;
     public Department(){}
     public Department(string name, int studentQuantity, int employeesnumber, Person headOfInstitution,string phoneNumber) 
     {
-        base.name = name;
+        this.name = name;
         this.studentQuantity = studentQuantity;
         this.employeesnumber = employeesnumber;
         this.headOfInstitution = headOfInstitution;
@@ -22,13 +29,10 @@ public class Department : EducationalInstitution
         name = department.name;
         this.studentQuantity = department.studentQuantity;
         this.employeesnumber = department.employeesnumber;
-        base.headOfInstitution = department.headOfInstitution;
-        base.phoneNumber = department.phoneNumber;
+        this.headOfInstitution = department.headOfInstitution;
+        this.phoneNumber = department.phoneNumber;
     }
-    public override void PrintInfo()
-    {
-        Console.WriteLine(this.ToString());
-    }
+
 
     public override string ToString()
     {

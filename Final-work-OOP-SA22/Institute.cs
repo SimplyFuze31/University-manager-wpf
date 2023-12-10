@@ -18,17 +18,15 @@ internal class Institute : EducationalInstitution
         this.headOfInstitution = institute.headOfInstitution;
         this.departmentsDictionary = institute.departmentsDictionary;
     }
-
+    
     public void AddDepartment(Department department)
     {
         departmentsDictionary.Add(department.Name , department);
     }
-
-    public void RemoveDepartment(Department department)
+    
+    public override void RemoveDepartment(string departmentName)
     {
-        departmentsDictionary.Remove(department.Name);
-        
-        
+        departmentsDictionary.Remove(departmentName);
     }
 
     public Department GetDepartment(string departmentname)
@@ -37,7 +35,7 @@ internal class Institute : EducationalInstitution
         {
             return departmentsDictionary[departmentname];
         }
-        catch (KeyNotFoundException e)
+        catch (KeyNotFoundException)
         {
             throw new Exception($"Такої кафедри {departmentname} не існує");
         }
