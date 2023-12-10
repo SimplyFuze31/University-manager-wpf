@@ -2,7 +2,7 @@
 
 namespace Final_work_OOP_SA22;
 
-internal class Institute : EducationalInstitution
+public class Institute : EducationalInstitution
 {
     private List<Department> departmentsList;
     

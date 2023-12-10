@@ -1,5 +1,4 @@
 ﻿namespace Final_work_OOP_SA22;
-
 public static class Helper
 {
     private static string[] InstitutesName = new[]
@@ -41,9 +40,9 @@ public static class Helper
         return new Person(name, lastname);
     }
     
-    public static List<EducationalInstitution> GenerateInstitutes(int count)
+    public static List<Institute> GenerateInstitutes(int count)
     {
-        List<EducationalInstitution> institutes = new();
+        List<Institute> institutes = new();
         Random random = new();
         
         for (int i = 0; i < count; i++)
@@ -69,5 +68,19 @@ public static class Helper
         }
 
         return departments;
+    }
+    
+    public static List<EducationalInstitution> GenerateUniversitys(int count)
+    {
+        List<EducationalInstitution> universitys = new();
+        Random random = new();
+        for (int i = 0; i < count; i++)
+        {
+            var institutes = GenerateInstitutes(5);
+            universitys.Add(new University(InstitutesName[i],AccreditationLevels.Institute, DateTime.Now ,
+                GeneratePerson(),random.Next(90,100),random.Next(10000000,900000000).ToString(),institutes));
+        }
+ 
+        return universitys;
     }
 }
