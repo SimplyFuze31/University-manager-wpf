@@ -5,11 +5,11 @@ namespace Final_work_OOP_SA22
     public abstract class EducationalInstitution
     {
 
-        protected string name;
+        protected string _name;
         
         public string Name
         {
-            get { return name; }
+            get { return _name; }
         }
         
         protected AccreditationLevels accreditationLevel;
@@ -17,19 +17,24 @@ namespace Final_work_OOP_SA22
         protected DateTime foundationDate;
 
         protected int _numberofstudents;
-
-        protected Person headOfInstitution;
         
-        public string HeadOfInstitution
+        public int NumberOfStudents
         {
-            get { return headOfInstitution.ToString(); }
+            get { return _numberofstudents; }
         }
 
-        protected int rating;
+        protected Person _headOfInstitution;
+        
+        public Person HeadOfInstitution
+        {
+            get {  return _headOfInstitution; }
+        }
+
+        protected int _rating;
         
         public int Rating
         {
-            get { return rating; }
+            get { return _rating; }
         }
 
         protected string phoneNumber;
@@ -42,31 +47,30 @@ namespace Final_work_OOP_SA22
             DateTime foundationDate, Person headOfInstitution,
             int rating, string phoneNumber)
         {
-            this.name = name;
+            this._name = name;
             this.accreditationLevel = accreditationLevel;
             this.foundationDate = foundationDate;
             // TODO: Make student count
 
-            this.headOfInstitution = headOfInstitution;
-            this.rating = rating;
+            this._headOfInstitution = headOfInstitution;
+            this._rating = rating;
             this.phoneNumber = phoneNumber;
         }
 
         public EducationalInstitution(EducationalInstitution institution)
         {
-            name = institution.name;
+            _name = institution._name;
             this.accreditationLevel = institution.accreditationLevel;
             this.foundationDate = institution.foundationDate;
             this._numberofstudents = institution._numberofstudents;
-            this.headOfInstitution = institution.headOfInstitution;
-            this.rating = institution.rating;
+            this._headOfInstitution = institution._headOfInstitution;
+            this._rating = institution._rating;
             this.phoneNumber = institution.phoneNumber;
         }
         
         public abstract void RemoveDepartment(string departmentName);
 
         public abstract int GetNumberOfStudents();
-        public abstract void PrintInfo();
         
         
     }

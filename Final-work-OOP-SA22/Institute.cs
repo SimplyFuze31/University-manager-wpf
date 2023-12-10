@@ -5,8 +5,7 @@ namespace Final_work_OOP_SA22;
 internal class Institute : EducationalInstitution
 {
     private List<Department> departmentsList;
-
-
+    
     public Institute(string name, AccreditationLevels accreditationLevel,
         DateTime foundationDate, Person headOfInstitution,
         int rating, string phoneNumber,List<Department> departmentsList):base(name:name, 
@@ -18,8 +17,8 @@ internal class Institute : EducationalInstitution
 
     public Institute(Institute institute)
     {
-        this.headOfInstitution = institute.headOfInstitution;
-        this.rating = institute.rating;
+        this._headOfInstitution = institute._headOfInstitution;
+        this._rating = institute._rating;
         this.departmentsList = institute.departmentsList;
     }
     
@@ -61,15 +60,11 @@ internal class Institute : EducationalInstitution
 
         return stringBuilder.ToString();
     }
-    public override void PrintInfo()
-    {
-        throw new NotImplementedException();
-    }
 
     public override string ToString()
     {
         return $"Назва:{Name}\n" +
-               $"Директор: {headOfInstitution.ToString()}\n" +
+               $"Директор: {_headOfInstitution.ToString()}\n" +
                $"Кафедри:\n" +
                $"{GetAllDepartments()}";
     }

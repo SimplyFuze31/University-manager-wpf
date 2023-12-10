@@ -2,21 +2,21 @@
 
 internal class University : EducationalInstitution
 {
-    private Dictionary<string, Institute> _institutesdictionary = new();
-
-
+    private List<Institute> _institutelist = new();
+    
     public University(University university):base(university)
     {
-        this._institutesdictionary = university._institutesdictionary;
+        this._institutelist = university._institutelist;
     }
     
-    // public University(string name, AccreditationLevels accreditationLevel,
-    //     DateTime foundationDate, int studentQuantity, Person headOfInstitution,
-    //     int rating, string phoneNumber, Dictionary<string,Institute> institutes) : base(name, accreditationLevel, foundationDate, studentQuantity,
-    //     headOfInstitution, rating, phoneNumber)
-    // {
-    //     _institutesdictionary = institutes;
-    // }
+    public University(string name, AccreditationLevels accreditationLevel,
+        DateTime foundationDate, Person headOfInstitution,
+        int rating, string phoneNumber, List<Institute> institutes) : base(name, accreditationLevel, foundationDate,
+        headOfInstitution, rating, phoneNumber)
+    {
+        _institutelist = institutes;
+        _numberofstudents = GetNumberOfStudents();
+    }
 
 
     public void AddDepartment(Institute institute)
@@ -32,11 +32,13 @@ internal class University : EducationalInstitution
 
     public override int GetNumberOfStudents()
     {
-        throw new NotImplementedException();
-    }
+        int numberofstudents = 0;
+        foreach (var institute in _institutelist)
+        {
+            numberofstudents += institute.NumberOfStudents;
+        }
 
-    public override void PrintInfo()
-    {
-        throw new NotImplementedException();
+        return numberofstudents;
     }
+    
 }
