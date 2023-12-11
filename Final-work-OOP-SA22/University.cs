@@ -1,35 +1,24 @@
-﻿namespace Final_work_OOP_SA22;
+﻿using System.Text;
+
+namespace Final_work_OOP_SA22;
 
 internal class University : EducationalInstitution
 {
-    private List<Institute> _institutelist = new();
+    private List<Institute> _institutelist;
     
     public University(University university):base(university)
     {
         this._institutelist = university._institutelist;
     }
     
-    public University(string name, AccreditationLevels accreditationLevel,
-        DateTime foundationDate, Person headOfInstitution,
-        int rating, string phoneNumber, List<Institute> institutes) : base(name, accreditationLevel, foundationDate,
-        headOfInstitution, rating, phoneNumber)
+    public University(string name, AccreditationLevels accreditationlevel, DateTime foundationDate, 
+        Person headOfInstitution, List<Institute> institutes) : base(name, accreditationlevel, 
+        foundationDate, headOfInstitution)
     {
         _institutelist = institutes;
         _numberofstudents = GetNumberOfStudents();
     }
-
-
-    public void AddDepartment(Institute institute)
-    {
-        // TODO: Make implementation
-        return;
-    }
-
-    public override void RemoveDepartment(string departmentName)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public override int GetNumberOfStudents()
     {
         int numberofstudents = 0;
@@ -41,4 +30,27 @@ internal class University : EducationalInstitution
         return numberofstudents;
     }
     
+    public string GetAllDepartments()
+    {
+        StringBuilder stringBuilder = new();
+
+        foreach (var institute in _institutelist)
+        {
+            stringBuilder.Append(institute.ToString()+"\n");
+        }
+
+        return stringBuilder.ToString();
+    }
+
+    public override string ToString()
+    {
+        return$"Назва:{Name}\n" +
+              $"Директор: {_headOfInstitution.ToString()}\n" +
+              $"Дата заснування: {_foundationDate.ToShortDateString()}\n" +
+              $"Рейтинг: {_rating}\n" +
+              $"Номер телефону: {_phonenumber}\n" +
+              $"Кількість студентів {GetNumberOfStudents()}\n" +
+              $"Інститути:\n" +
+              $"{GetAllDepartments()}";
+    }
 }

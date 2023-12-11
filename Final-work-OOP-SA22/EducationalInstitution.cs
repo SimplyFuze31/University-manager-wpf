@@ -4,18 +4,21 @@ namespace Final_work_OOP_SA22
 { 
     public abstract class EducationalInstitution
     {
-
         protected string _name;
-        
         public string Name
         {
             get { return _name; }
         }
-        
-        protected AccreditationLevels accreditationLevel;
-
-        protected DateTime foundationDate;
-
+        protected AccreditationLevels _accreditationlevel;
+        public AccreditationLevels AccreditationLevel
+        {
+            get { return _accreditationlevel; }
+        }
+        protected DateTime _foundationDate;
+        public DateTime FoundationDate
+        {
+            get { return _foundationDate; }
+        }
         protected int _numberofstudents;
         
         public int NumberOfStudents
@@ -24,7 +27,6 @@ namespace Final_work_OOP_SA22
         }
 
         protected Person _headOfInstitution;
-        
         public Person HeadOfInstitution
         {
             get {  return _headOfInstitution; }
@@ -35,44 +37,50 @@ namespace Final_work_OOP_SA22
         public int Rating
         {
             get { return _rating; }
+            set
+            {
+                if (value > 100)
+                    _rating = 100;
+                else if (value < 0)
+                    _rating = 0;
+                else
+                    _rating = value;
+            }
         }
 
-        protected string phoneNumber;
-
-        public EducationalInstitution()
+        protected string _phonenumber;
+        public string PhoneNumber
         {
+            get { return _phonenumber; }
+            set
+            {
+                if (Helper.IsValidPhone(value))
+                    _phonenumber = value;
+            }
         }
+        
+        public EducationalInstitution() { }
 
-        public EducationalInstitution(string name, AccreditationLevels accreditationLevel,
-            DateTime foundationDate, Person headOfInstitution,
-            int rating, string phoneNumber)
+        public EducationalInstitution(string name, AccreditationLevels accreditationlevel,
+            DateTime foundationDate, Person headOfInstitution)
         {
-            this._name = name;
-            this.accreditationLevel = accreditationLevel;
-            this.foundationDate = foundationDate;
-            // TODO: Make student count
-
-            this._headOfInstitution = headOfInstitution;
-            this._rating = rating;
-            this.phoneNumber = phoneNumber;
+            _name = name;
+            _accreditationlevel = accreditationlevel;
+            _foundationDate = foundationDate;
+            _headOfInstitution = headOfInstitution;
         }
 
         public EducationalInstitution(EducationalInstitution institution)
         {
             _name = institution._name;
-            this.accreditationLevel = institution.accreditationLevel;
-            this.foundationDate = institution.foundationDate;
-            this._numberofstudents = institution._numberofstudents;
-            this._headOfInstitution = institution._headOfInstitution;
-            this._rating = institution._rating;
-            this.phoneNumber = institution.phoneNumber;
+            _accreditationlevel = institution._accreditationlevel;
+            _foundationDate = institution._foundationDate;
+            _headOfInstitution = institution._headOfInstitution;
+            _rating = institution._rating;
+            _phonenumber = institution._phonenumber;
         }
         
-        public abstract void RemoveDepartment(string departmentName);
-
         public abstract int GetNumberOfStudents();
-        
-        
     }
     
 }

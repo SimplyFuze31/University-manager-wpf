@@ -6,10 +6,8 @@ public class Institute : EducationalInstitution
 {
     private List<Department> departmentsList;
     
-    public Institute(string name, AccreditationLevels accreditationLevel,
-        DateTime foundationDate, Person headOfInstitution,
-        int rating, string phoneNumber,List<Department> departmentsList):base(name:name, 
-        accreditationLevel ,foundationDate, headOfInstitution,rating,phoneNumber)
+    public Institute(string name, AccreditationLevels accreditationLevel, DateTime foundationDate, 
+        Person headOfInstitution, List<Department> departmentsList):base(name,accreditationLevel ,foundationDate, headOfInstitution)
     {
         this.departmentsList = departmentsList;
         this._numberofstudents = GetNumberOfStudents();
@@ -26,11 +24,6 @@ public class Institute : EducationalInstitution
     {
         departmentsList.Add(department);
     }
-    
-    public override void RemoveDepartment(string departmentName)
-    {
-        throw new NotImplementedException("Make remove from list");
-    }
 
     public override int GetNumberOfStudents()
     {
@@ -42,11 +35,6 @@ public class Institute : EducationalInstitution
         }
         
         return numberofstudents;
-    }
-
-    public Department GetDepartment(string departmentname)
-    {
-        throw new NotImplementedException("Get depatment not work");
     }
     
     public string GetAllDepartments()
@@ -63,9 +51,12 @@ public class Institute : EducationalInstitution
 
     public override string ToString()
     {
-        return $"Назва:{Name}\n" +
-               $"Директор: {_headOfInstitution.ToString()}\n" +
-               $"Кафедри:\n" +
+        return $"\tНазва:{Name}\n" +
+               $"\tДиректор: {_headOfInstitution.ToString()}\n" +
+               $"\tДата заснування: {_foundationDate.ToShortDateString()}\n" +
+               $"\tРейтинг: {_rating}\n" +
+               $"\tНомер телефону: {_phonenumber}\n" +
+               $"\tКафедри:\n" +
                $"{GetAllDepartments()}";
     }
 }

@@ -1,6 +1,50 @@
-﻿namespace Final_work_OOP_SA22;
+﻿using System.Text.RegularExpressions;
+using Final_work_OOP_SA22.Factories;
+
+namespace Final_work_OOP_SA22;
 public static class Helper
 {
+    public const string MatchPhonePattern =
+        @"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$";
+    
+    public static bool IsValidPhone(string Phone)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(Phone))
+                return false;
+            var r = new Regex(MatchPhonePattern);
+            return r.IsMatch(Phone);
+
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+    
+    static DateTime RandomDay()
+    {
+        Random gen = new Random();
+        DateTime start = new DateTime(1995, 1, 1);
+        int range = (DateTime.Today - start).Days;           
+        return start.AddDays(gen.Next(range));
+    }
+    
+    public static string GeneratePhoneNumber()
+    {
+        var random = new Random();
+        string s = string.Empty;
+        for (int i = 0; i <= 10; i++)
+            s = String.Concat(s, random.Next(10).ToString());
+        return s;
+    }
+
+    public static string GenerateUniversityName()
+    {
+        Random random = new Random();
+        return $"Університет імені {Names[random.Next(0, Names.Length)]} {LastNames[random.Next(0, LastNames.Length)]}";
+    }
     private static string[] InstitutesName = new[]
     {
         "Інститут комп'ютерних наук та інформаційних технологій",
@@ -25,62 +69,72 @@ public static class Helper
 
     private static string[] Names = new[]
     {
-        "Богдан", "Андрій", "Олександр", "Сергій", "Микола","Стахів"
+        "Богдан", "Андрій", "Олександр", "Сергій", "Микола","Василь"
     };
 
     private static string[] LastNames = new[]
     {
-        "Черкес","Медиковський","Микийчук","Костів",
+        "Черкес","Медиковський","Микийчук","Костів","Кондратюк","Юзьвак","Стахів"
     };
-    public static Person GeneratePerson()
+    private static Person GeneratePerson()
     {
         Random random = new();
-        string name = Names[random.Next(0, Names.Length - 1)];
-        string lastname = LastNames[random.Next(0, LastNames.Length - 1)];
+        string name = Names[random.Next(0, Names.Length)];
+        string lastname = LastNames[random.Next(0, LastNames.Length)];
         return new Person(name, lastname);
     }
     
-    public static List<Institute> GenerateInstitutes(int count)
+    private static List<Institute> GenerateInstitutes(int count)
     {
         List<Institute> institutes = new();
+
+        EducationalInstitutionFactory factory;
         Random random = new();
         
         for (int i = 0; i < count; i++)
         {
-            var departments = GenerateDepartments(5);
-            institutes.Add(new Institute(InstitutesName[i],AccreditationLevels.Institute, DateTime.Now ,
-                GeneratePerson(),random.Next(90,100),random.Next(10000000,900000000).ToString(),departments));
+            string institutename = InstitutesName[random.Next(0, InstitutesName.Length)];
+            int rating = random.Next(50, 100);
+            factory = new InstituteFactory(institutename, AccreditationLevels.Institute, RandomDay(),
+                GeneratePerson(),rating,GeneratePhoneNumber(),GenerateDepartments(random.Next(5,15)));
+            institutes.Add((Institute)factory.GetEducationalInstitution());
         }
-
+    
         return institutes;
     }
     
-    
-    public static List<Department> GenerateDepartments(int count)
+    //
+    private static List<Department> GenerateDepartments(int count)
     {
         List<Department> departments = new();
         Random random = new();
+        EducationalInstitutionFactory factory;
         for (int i = 0; i < count; i++)
-        {
-            
-            departments.Add(new Department(DepartmentsName[random.Next(0,DepartmentsName.Length)],random.Next(300,2000),
-                random.Next(20,400),GeneratePerson(),random.Next(10000000,900000000).ToString()));
+        { 
+            string name = DepartmentsName[random.Next(0, DepartmentsName.Length)];
+            factory = new DepartmentFactory(name, random.Next(400, 2000), random.Next(40, 200), GeneratePerson(),
+                GeneratePhoneNumber());
+            departments.Add((Department)factory.GetEducationalInstitution());
         }
-
+    
         return departments;
     }
-    
-    public static List<EducationalInstitution> GenerateUniversitys(int count)
+    //
+    public static List<EducationalInstitution> GenerateUniversities(int count)
     {
-        List<EducationalInstitution> universitys = new();
+        EducationalInstitutionFactory factory;
+        List<EducationalInstitution> universities = new();
         Random random = new();
         for (int i = 0; i < count; i++)
         {
-            var institutes = GenerateInstitutes(5);
-            universitys.Add(new University(InstitutesName[i],AccreditationLevels.Institute, DateTime.Now ,
-                GeneratePerson(),random.Next(90,100),random.Next(10000000,900000000).ToString(),institutes));
+            string univertyname = InstitutesName[random.Next(0, InstitutesName.Length)];
+            int rating = random.Next(50, 100);
+            var institutes = GenerateInstitutes(random.Next(3,12));
+            factory = new UniversityFactory(GenerateUniversityName(), AccreditationLevels.University, RandomDay(),
+                GeneratePerson(),rating,GeneratePhoneNumber(),institutes);
+            universities.Add((University)factory.GetEducationalInstitution());
         }
- 
-        return universitys;
+    
+        return universities;
     }
 }
