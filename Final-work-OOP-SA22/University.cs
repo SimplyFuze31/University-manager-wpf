@@ -2,10 +2,14 @@
 
 namespace Final_work_OOP_SA22;
 
-internal class University : EducationalInstitution
+public class University : EducationalInstitution
 {
     private List<Institute> _institutelist;
-    
+
+    public University()
+    {
+        
+    }
     public University(University university):base(university)
     {
         this._institutelist = university._institutelist;

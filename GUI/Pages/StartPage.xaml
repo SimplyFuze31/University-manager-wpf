@@ -1,0 +1,46 @@
+﻿<Page x:Class="GUI.Pages.StartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:GUI.Pages"
+      mc:Ignorable="d"
+      Title="StartPage" Height="Auto" Width="Auto">
+<Grid x:Name="Main">
+                
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <StackPanel.Resources>
+                                <Style TargetType="Button">
+                                        <Setter Property="Margin" Value="0,0,10,0"></Setter>
+                                        <Setter Property="Padding" Value="0,5"></Setter>
+                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                </Style>
+                        </StackPanel.Resources>
+                        
+                        <Button x:Name="AddButton">Додати</Button>
+                        <Button x:Name="RemoveButton">Видалити</Button>
+                        <Button>Змінити</Button>
+                        <Button>Cортувати</Button>
+                        <Label VerticalAlignment="Center">Сортувати за:</Label>
+                        <ComboBox SelectedValue="Назвою закладу" VerticalAlignment="Center">Назвою закладу
+                        </ComboBox>
+                </StackPanel>
+                <Frame Grid.Row="1"></Frame>
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False" Name="dgEducationalInstitution" 
+                          ColumnWidth="Auto" CanUserSortColumns="False"
+                          
+                          MouseDoubleClick="DgEducationalInstitution_OnMouseDoubleClick">
+                        <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" Header="Назва навчально закладу" Binding="{Binding Path=Name, Mode=OneWay}" />
+                                <DataGridTextColumn Width="Auto" Header="Рейтинг" Binding="{Binding Path=Rating}" IsReadOnly="True" />
+                                <DataGridTextColumn Width="*" Header="Директор навчального закладу" Binding="{Binding Path=HeadOfInstitution , Mode=OneWay}" />
+                                <DataGridTextColumn Width="*" Header="Кількість студентів" Binding="{Binding Path=NumberOfStudents , Mode=OneWay}"/>
+                        </DataGrid.Columns>
+                </DataGrid>
+        </Grid>
+</Page>

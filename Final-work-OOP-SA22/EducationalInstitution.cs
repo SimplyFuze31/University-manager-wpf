@@ -54,7 +54,7 @@ namespace Final_work_OOP_SA22
             get { return _phonenumber; }
             set
             {
-                if (Helper.IsValidPhone(value))
+                //if (Helper.IsValidPhone(value))
                     _phonenumber = value;
             }
         }

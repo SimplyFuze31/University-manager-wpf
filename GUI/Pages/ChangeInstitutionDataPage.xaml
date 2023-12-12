@@ -1,0 +1,47 @@
+﻿<Page x:Class="GUI.Pages.ChangeInstitutionDataPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:GUI.Pages"
+      mc:Ignorable="d"
+      Title="ChangeInstitutionDataPage" Height="Auto" Width="Auto"
+      MinWidth="600" MinHeight="300">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        
+        <StackPanel Margin="10">
+            <Label Content="Назва навчального закладу"/>
+            <TextBox x:Name="tbUniversityName"></TextBox>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                <Label>Рейтинг:</Label>
+                <TextBox x:Name="tbRating"  MinWidth="40" />
+            </StackPanel>
+            <Label Content="Контакти:"/>
+            <Label Content="Директор навчального закладу:" Target="tbHeadOfInstitution"/>
+            <TextBox x:Name="tbHeadOfInstitution" />
+            <Label Content="Номер телефону:"/>
+            <TextBox x:Name="tbPhoneNumber" />
+            <Label Content="Інформація:"/>
+            <Label x:Name="lNumberOfStudents" Content="Кількість студентів: "/>
+            <Label x:Name="lNumberOfInstitutes" Content="Кількість інститутів: "/>
+            <Label x:Name="lNumberOfDepartments" Content="Кількість кафедр: "/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button x:Name="bSaveChanges" Content="Зберегти зміни"></Button>
+            <Button x:Name="bReturnBack" Margin="35,0,0,0" Content="На головну"
+                    Click="BReturnBack_OnClick"></Button>
+        </StackPanel>
+    </Grid>
+</Page>
