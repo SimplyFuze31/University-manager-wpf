@@ -6,8 +6,8 @@ namespace Final_work_OOP_SA22
 { 
     public abstract class EducationalInstitution
     {
-        protected Guid _id;
-        public Guid Id { get; }
+        public Guid Id { get; set; }
+        
         protected string _name;
         public string Name
         {
@@ -46,8 +46,8 @@ namespace Final_work_OOP_SA22
             get { return _numberofstudents; }
             set
             {
-                if (value > 0 && this is Department)
-                    _numberofstudents = value;
+                if (value > 0)
+                    _numberofstudents = GetNumberOfStudents();
             }
         }
 
@@ -87,13 +87,13 @@ namespace Final_work_OOP_SA22
 
         public EducationalInstitution()
         {
-            _id = Guid.NewGuid();
+            //_id = Helper.GenerateIdNumber();
         }
 
-        public EducationalInstitution(string name, AccreditationLevels accreditationlevel,
+        public EducationalInstitution(Guid id, string name, AccreditationLevels accreditationlevel,
             DateTime foundationDate, Person headOfInstitution)
         {
-            _id = Guid.NewGuid();
+            Id = id;
             _name = name;
             _accreditationlevel = accreditationlevel;
             _foundationDate = foundationDate;
@@ -102,7 +102,7 @@ namespace Final_work_OOP_SA22
 
         public EducationalInstitution(EducationalInstitution institution)
         {
-            _id = Guid.NewGuid();
+            Id = institution.Id;
             _name = institution._name;
             _accreditationlevel = institution._accreditationlevel;
             _foundationDate = institution._foundationDate;

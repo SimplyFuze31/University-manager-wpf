@@ -11,36 +11,38 @@ public class University : EducationalInstitution
         get { return _institutelist; }
         set
         {
-            if (value != null)
-                _institutelist = value;
+            _institutelist = value;
         }
     }
 
-    public University() : base()
+    public University()
     {
-        
     }
     public University(University university):base(university)
     {
         this._institutelist = university._institutelist;
+        NumberOfStudents = this.GetNumberOfStudents();
     }
     
-    public University(string name, AccreditationLevels accreditationlevel, DateTime foundationDate, 
-        Person headOfInstitution, ExtendedList<Institute> institutes) : base(name, accreditationlevel, 
+    public University(Guid id, string name, AccreditationLevels accreditationlevel, DateTime foundationDate, 
+        Person headOfInstitution, ExtendedList<Institute> institutes) : base(id,name, accreditationlevel, 
         foundationDate, headOfInstitution)
     {
         _institutelist = institutes;
         _numberofstudents = GetNumberOfStudents();
     }
     
-    public override int GetNumberOfStudents()
+    public sealed override int GetNumberOfStudents()
     {
+        
         int numberofstudents = 0;
-        foreach (var institute in _institutelist)
+        if (this.Institutes != null)
         {
-            numberofstudents += institute.NumberOfStudents;
+            foreach (var institute in _institutelist)
+            {
+                numberofstudents += institute.NumberOfStudents;
+            }
         }
-
         return numberofstudents;
     }
     

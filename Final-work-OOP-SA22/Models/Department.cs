@@ -12,20 +12,29 @@ public class Department : EducationalInstitution
                 _numberofemployees = value;
         }
     }
-    
-    public Department() :base() {}
-    public Department(string name, int numberofstudents, int numberofemployees, Person headOfInstitution) 
+    private new int _numberofstudents;
+        
+    public  new int NumberOfStudents
     {
-        _id = Guid.NewGuid();
-        _name = name;
+        get { return _numberofstudents; }
+        set
+        {
+            if (value > 0)
+                _numberofstudents = value;
+        }
+    }
+    
+    public Department(){}
+    public Department(Guid id, string name, AccreditationLevels accreditationlevel, DateTime foundationDate, 
+        Person headOfInstitution, int numberofemployees,int numberofstudents ) : base(id,name, accreditationlevel, 
+        foundationDate, headOfInstitution) 
+    {
         _numberofstudents = numberofstudents;
         _numberofemployees = numberofemployees;
-        _headOfInstitution = headOfInstitution;
     }
 
-    public Department(Department department) 
+    public Department(Department department)
     {
-        _id = Guid.NewGuid();
         _name = department._name;
         _phonenumber = department._phonenumber;
         _numberofstudents = department._numberofstudents;

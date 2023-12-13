@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Final_work_OOP_SA22;
+using Final_work_OOP_SA22.Extensions;
 
 namespace GUI.Pages;
 
@@ -31,5 +33,13 @@ public partial class StartPage : Page
         {
             return;
         }
+    }
+
+    private void BAddUniversity_OnClick(object sender, RoutedEventArgs e)
+    {
+        
+            var uni = new University();
+            _click(uni);
+
     }
 }

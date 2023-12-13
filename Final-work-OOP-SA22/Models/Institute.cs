@@ -16,12 +16,11 @@ public class Institute : EducationalInstitution
         }
     }
 
-    public Institute():base()
+    public Institute()
     {
-        
     }
-    public Institute(string name, AccreditationLevels accreditationLevel, DateTime foundationDate, 
-        Person headOfInstitution, ExtendedList<Department> departmentslist):base(name,accreditationLevel ,foundationDate, headOfInstitution)
+    public Institute(Guid id, string name, AccreditationLevels accreditationLevel, DateTime foundationDate, 
+        Person headOfInstitution, ExtendedList<Department> departmentslist):base(id,name,accreditationLevel ,foundationDate, headOfInstitution)
     {
         this._departmentslist = departmentslist;
         this._numberofstudents = GetNumberOfStudents();

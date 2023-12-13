@@ -1,9 +1,8 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.Unicode;
 
-namespace Final_work_OOP_SA22;
+namespace Final_work_OOP_SA22.Extensions;
 
 public class Serealizator
 {
@@ -28,18 +27,18 @@ public class Serealizator
 
     public static ExtendedList<University> Load()
     {
-        ExtendedList<University>? edu = new();
+        ExtendedList<University>? edu;
         using (StreamReader reader = new StreamReader(_path))
         {
-            JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-                WriteIndented = true,
-                IncludeFields = true
-            };
             edu =  JsonSerializer.Deserialize<ExtendedList<University>>(reader.ReadToEnd());
         }
 
+        // ExtendedList<University> newedu = new();
+        //
+        // foreach (var uni in edu)
+        // {
+        //     newedu.Add(new University(uni));
+        // }
         return edu;
     }
     

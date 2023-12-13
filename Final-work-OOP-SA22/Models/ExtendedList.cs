@@ -2,7 +2,10 @@
 
 public class ExtendedList<T> : List<T> where T : EducationalInstitution
 {
-    public void Replace(T item)
+    public ExtendedList():base()
+    {
+    }
+    public void Replace(T item) 
     {
         int index = this.FindIndex(n => n.Id == item.Id);
 

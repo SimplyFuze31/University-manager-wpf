@@ -4,9 +4,10 @@ public class UniversityFactory : EducationalInstitutionFactory
 {
     private ExtendedList<Institute> _instituteslist;
 
-    public UniversityFactory(string name, AccreditationLevels accreditationLevel, DateTime foundationdate,
+    public UniversityFactory(Guid id,string name, AccreditationLevels accreditationLevel, DateTime foundationdate,
         Person headofinstitution, int rating, string phonenumber, ExtendedList<Institute> instituteslist) : base(name, accreditationLevel, foundationdate, headofinstitution, rating, phonenumber)
     {
+        _id = id;
         _instituteslist = instituteslist;
     }
 
@@ -14,7 +15,7 @@ public class UniversityFactory : EducationalInstitutionFactory
     {
         try
         {
-            return new University(_name, _accreditationlevel, _foundationDate, _headOfInstitution, _instituteslist)
+            return new University(_id,_name, _accreditationlevel, _foundationDate, _headOfInstitution, _instituteslist)
             {
                 PhoneNumber = _phonenumber,
                 Rating = _rating

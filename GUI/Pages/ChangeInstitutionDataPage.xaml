@@ -24,18 +24,17 @@
             
             <StackPanel Margin="10">
                 <Label Content="Назва навчального закладу"/>
-                <TextBox x:Name="tbUniversityName"
-                         TextChanged="tbTextEmptyObserver"></TextBox>
+                <TextBox x:Name="tbUniversityName"></TextBox>
             
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
                     <Label>Рейтинг:</Label>
-                    <TextBox x:Name="tbRating"  MinWidth="40" TextChanged="tbTextEmptyObserver" />
+                    <TextBox x:Name="tbRating"  MinWidth="40" />
                 </StackPanel>
                 <Label Content="Контакти:"/>
                 <Label Content="Директор навчального закладу:" Target="tbHeadOfInstitution"/>
-                <TextBox x:Name="tbHeadOfInstitution" TextChanged="tbTextEmptyObserver"/>
+                <TextBox x:Name="tbHeadOfInstitution"/>
                 <Label Content="Номер телефону:"/>
-                <TextBox x:Name="tbPhoneNumber" TextChanged="tbTextEmptyObserver"/>
+                <TextBox x:Name="tbPhoneNumber" />
                 <Label Content="Інформація:"/>
                 <Label x:Name="lNumberOfStudents" Content="Кількість студентів: "/>
             </StackPanel>
@@ -64,8 +63,8 @@
                     </Style>
                 </StackPanel.Resources>
                 <Label>Інститути: </Label>
-                <Button>Додати</Button>
-                <Button>Видалити</Button>
+                <Button Click="BAddInstitute_OnClick" x:Name="bAddInstitute">Додати</Button>
+                <Button x:Name="bDeleteInstitute" Click="BDeleteInstitute_OnClick">Видалити</Button>
                 <Button>Сортувати</Button>
             </StackPanel>
             <ListView Name="lvInstitutes" MinHeight="150" 
@@ -107,29 +106,30 @@
             </ListView>
         </StackPanel>
         <!--3 стовпчик-->
-        <StackPanel Grid.Row="0" Grid.Column="2" Margin="10" >
-            <StackPanel Margin="10">
+        
+            <StackPanel Grid.Column="2" Margin="10"
+                        x:Name="stpDepartmentPanel">
                 <Label Content="Назва навчального закладу"/>
-                <TextBox x:Name="tbInstitutionName"
-                         TextChanged="tbTextEmptyObserver"></TextBox>
+                <TextBox x:Name="tbInstitutionName"></TextBox>
             
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
                     <Label>Рейтинг:</Label>
-                    <TextBox x:Name="tbInstitutionRating"  MinWidth="40" TextChanged="tbTextEmptyObserver" />
+                    <TextBox VerticalContentAlignment="Center" x:Name="tbInstitutionRating"  MinWidth="40"/>
                 </StackPanel>
                 <Label Content="Контакти:"/>
                 <Label Content="Директор навчального закладу:" Target="tbHeadOfDepartment"/>
-                <TextBox x:Name="tbHeadOfDepartment" TextChanged="tbTextEmptyObserver"/>
+                <TextBox x:Name="tbHeadOfDepartment"/>
                 <Label Content="Номер телефону:"/>
-                <TextBox x:Name="tbInstitutionPhoneNumber" TextChanged="tbTextEmptyObserver"/>
+                <TextBox x:Name="tbInstitutionPhoneNumber"/>
                 <Label Content="Інформація:"/>
                 <Label Content="Кількість студентів"/>
                 <TextBox x:Name="tbNumberOfStudents"/>
                 <Button Margin="0,15,0,0"
                         x:Name="bSaveDepartment"
                         Click="BSaveDepartment_OnClick">Зберегти</Button>
+                <Label x:Name="lInfo"></Label>
             </StackPanel>
-        </StackPanel>
+        
         
         
         

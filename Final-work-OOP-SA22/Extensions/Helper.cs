@@ -42,6 +42,14 @@ public static class Helper
         return s;
     }
     
+    public static string GenerateIdNumber()
+    {
+        var random = new Random();
+        string s = string.Empty;
+        for (int i = 0; i <= 24; i++)
+            s = String.Concat(s, random.Next(10).ToString());
+        return s;
+    }
 
     public static string GenerateUniversityName()
     {
@@ -98,7 +106,8 @@ public static class Helper
         {
             string institutename = InstitutesName[random.Next(0, InstitutesName.Length)];
             int rating = random.Next(50, 100);
-            factory = new InstituteFactory(institutename, AccreditationLevels.Institute, RandomDay(),
+            var id = Guid.NewGuid();
+            factory = new InstituteFactory(id,institutename, AccreditationLevels.Institute, RandomDay(),
                 GeneratePerson(),rating,GeneratePhoneNumber(),GenerateDepartments(random.Next(3,7)));
             institutes.Add((Institute)factory.GetEducationalInstitution());
         }
@@ -115,7 +124,7 @@ public static class Helper
         for (int i = 0; i < count; i++)
         { 
             string name = DepartmentsName[random.Next(0, DepartmentsName.Length)];
-            factory = new DepartmentFactory(name, random.Next(400, 2000), random.Next(40, 200), GeneratePerson(),
+            factory = new DepartmentFactory(Guid.NewGuid(),name, random.Next(400, 2000), random.Next(40, 200), GeneratePerson(),
                 GeneratePhoneNumber());
             departments.Add((Department)factory.GetEducationalInstitution());
         }
@@ -133,7 +142,7 @@ public static class Helper
             string univertyname = InstitutesName[random.Next(0, InstitutesName.Length)];
             int rating = random.Next(50, 100);
             var institutes = GenerateInstitutes(random.Next(3,10));
-            factory = new UniversityFactory(GenerateUniversityName(), AccreditationLevels.University, RandomDay(),
+            factory = new UniversityFactory(Guid.NewGuid(),GenerateUniversityName(), AccreditationLevels.University, RandomDay(),
                 GeneratePerson(),rating,GeneratePhoneNumber(),institutes);
             universities.Add((University)factory.GetEducationalInstitution());
         }

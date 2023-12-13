@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Final_work_OOP_SA22;
+using Final_work_OOP_SA22.Extensions;
 using GUI.Pages;
 
 namespace GUI
@@ -32,7 +33,8 @@ namespace GUI
             InitializeComponent();
             StarPageClickHandler = OpenStarPage;
             DataGridClickHandler = OpenChangeInstitutionDataPage;
-            Serealizator.Save(Helper.GenerateUniversities(50));
+            var uni = Helper.GenerateUniversities(5);
+            Serealizator.Save(uni);
             OpenStarPage();
             
         }

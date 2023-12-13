@@ -5,8 +5,9 @@ public class DepartmentFactory : EducationalInstitutionFactory
     private int _numberofstudents;
     private int _numberofemployees;
     
-    public DepartmentFactory(string name, int numberofstudents, int numberofemployees, Person headofinstitution, string phonenumber)
+    public DepartmentFactory(Guid id, string name, int numberofstudents, int numberofemployees, Person headofinstitution, string phonenumber)
     {
+        _id = id;
         _name = name;
         _numberofstudents = numberofstudents;
         _numberofemployees = numberofemployees;
@@ -18,9 +19,10 @@ public class DepartmentFactory : EducationalInstitutionFactory
     {
         try
         {
-            return new Department(_name, _numberofstudents, _numberofemployees, _headOfInstitution)
+            return new Department(_id, _name , AccreditationLevels.College , DateTime.MinValue,_headOfInstitution, _numberofemployees,_numberofstudents  )
             {
                 PhoneNumber = _phonenumber
+                
             };
         }
         catch (Exception e)

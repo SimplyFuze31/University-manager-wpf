@@ -1,7 +1,8 @@
 ﻿namespace Final_work_OOP_SA22.Factories;
 
-public abstract class EducationalInstitutionFactory
-{
+public abstract class EducationalInstitutionFactory{
+    
+    protected Guid _id;
     protected string _name;
 
     protected AccreditationLevels _accreditationlevel;
