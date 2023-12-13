@@ -2,10 +2,10 @@
 
 public class InstituteFactory : EducationalInstitutionFactory
 {
-    private List<Department> _departmentslist;
+    private ExtendedList<Department> _departmentslist;
 
     public InstituteFactory(string name, AccreditationLevels accreditationLevel, DateTime foundationdate,
-        Person headofinstitution, int rating, string phonenumber, List<Department> departmentslist) : base(name, accreditationLevel, foundationdate, headofinstitution, rating, phonenumber)
+        Person headofinstitution, int rating, string phonenumber, ExtendedList<Department> departmentslist) : base(name, accreditationLevel, foundationdate, headofinstitution, rating, phonenumber)
     {
         _departmentslist = departmentslist;
     }
