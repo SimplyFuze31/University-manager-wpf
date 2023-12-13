@@ -4,9 +4,9 @@ namespace Final_work_OOP_SA22;
 
 public class Institute : EducationalInstitution
 {
-    private List<Department> _departmentslist;
+    private ExtendedList<Department> _departmentslist;
     
-    public List<Department> Departments
+    public ExtendedList<Department> Departments
     {
         get { return _departmentslist; }
         set
@@ -16,12 +16,12 @@ public class Institute : EducationalInstitution
         }
     }
 
-    public Institute()
+    public Institute():base()
     {
         
     }
     public Institute(string name, AccreditationLevels accreditationLevel, DateTime foundationDate, 
-        Person headOfInstitution, List<Department> departmentslist):base(name,accreditationLevel ,foundationDate, headOfInstitution)
+        Person headOfInstitution, ExtendedList<Department> departmentslist):base(name,accreditationLevel ,foundationDate, headOfInstitution)
     {
         this._departmentslist = departmentslist;
         this._numberofstudents = GetNumberOfStudents();

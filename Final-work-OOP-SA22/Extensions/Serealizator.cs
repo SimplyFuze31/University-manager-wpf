@@ -10,7 +10,7 @@ public class Serealizator
     private static string _path = @"C:\Users\Simplyfuze\OOP-SA22\data.json";
 
 
-    public static void Save(List<University> edu)
+    public static void Save(ExtendedList<University> edu)
     {
         using (StreamWriter writer = new StreamWriter(_path))
         {
@@ -26,9 +26,9 @@ public class Serealizator
         }
     }
 
-    public static List<University> Load()
+    public static ExtendedList<University> Load()
     {
-        List<University> edu = new();
+        ExtendedList<University>? edu = new();
         using (StreamReader reader = new StreamReader(_path))
         {
             JsonSerializerOptions options = new JsonSerializerOptions
@@ -37,9 +37,7 @@ public class Serealizator
                 WriteIndented = true,
                 IncludeFields = true
             };
-            edu =  JsonSerializer.Deserialize<List<University>>(reader.ReadToEnd());
-            
-           
+            edu =  JsonSerializer.Deserialize<ExtendedList<University>>(reader.ReadToEnd());
         }
 
         return edu;

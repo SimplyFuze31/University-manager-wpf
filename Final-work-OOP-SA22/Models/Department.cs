@@ -13,12 +13,10 @@ public class Department : EducationalInstitution
         }
     }
     
-    
-    
-    
-    public Department(){}
+    public Department() :base() {}
     public Department(string name, int numberofstudents, int numberofemployees, Person headOfInstitution) 
     {
+        _id = Guid.NewGuid();
         _name = name;
         _numberofstudents = numberofstudents;
         _numberofemployees = numberofemployees;
@@ -27,6 +25,7 @@ public class Department : EducationalInstitution
 
     public Department(Department department) 
     {
+        _id = Guid.NewGuid();
         _name = department._name;
         _phonenumber = department._phonenumber;
         _numberofstudents = department._numberofstudents;

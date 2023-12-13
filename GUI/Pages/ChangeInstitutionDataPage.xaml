@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GUI.Pages"
       mc:Ignorable="d"
       Title="ChangeInstitutionDataPage" Height="Auto" Width="Auto"
-      MinWidth="600" MinHeight="300">
+      MinWidth="800" MinHeight="300">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition ></ColumnDefinition>
@@ -14,34 +14,124 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-        </Grid.RowDefinitions>
-
-        
-        <StackPanel Margin="10">
-            <Label Content="Назва навчального закладу"/>
-            <TextBox x:Name="tbUniversityName"></TextBox>
+        <!--1 стовпчик -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+            </Grid.RowDefinitions>
             
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
-                <Label>Рейтинг:</Label>
-                <TextBox x:Name="tbRating"  MinWidth="40" />
+            
+            <StackPanel Margin="10">
+                <Label Content="Назва навчального закладу"/>
+                <TextBox x:Name="tbUniversityName"
+                         TextChanged="tbTextEmptyObserver"></TextBox>
+            
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                    <Label>Рейтинг:</Label>
+                    <TextBox x:Name="tbRating"  MinWidth="40" TextChanged="tbTextEmptyObserver" />
+                </StackPanel>
+                <Label Content="Контакти:"/>
+                <Label Content="Директор навчального закладу:" Target="tbHeadOfInstitution"/>
+                <TextBox x:Name="tbHeadOfInstitution" TextChanged="tbTextEmptyObserver"/>
+                <Label Content="Номер телефону:"/>
+                <TextBox x:Name="tbPhoneNumber" TextChanged="tbTextEmptyObserver"/>
+                <Label Content="Інформація:"/>
+                <Label x:Name="lNumberOfStudents" Content="Кількість студентів: "/>
             </StackPanel>
-            <Label Content="Контакти:"/>
-            <Label Content="Директор навчального закладу:" Target="tbHeadOfInstitution"/>
-            <TextBox x:Name="tbHeadOfInstitution" />
-            <Label Content="Номер телефону:"/>
-            <TextBox x:Name="tbPhoneNumber" />
-            <Label Content="Інформація:"/>
-            <Label x:Name="lNumberOfStudents" Content="Кількість студентів: "/>
-            <Label x:Name="lNumberOfInstitutes" Content="Кількість інститутів: "/>
-            <Label x:Name="lNumberOfDepartments" Content="Кількість кафедр: "/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button x:Name="bSaveChanges" Content="Зберегти зміни"
+                        Click="BSaveChanges_OnClick"></Button>
+                <Button x:Name="bReturnBack" Margin="35,0,0,0" Content="На головну"
+                        Click="BReturnBack_OnClick"></Button>
+            </StackPanel>
+        </Grid>
+       
+
+        <!--2 стовчик-->
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,10,0,10">
+            
+            <!--Блок інститутів-->
+            <StackPanel x:Name="stpInstitutesTollbar"
+                        Orientation="Horizontal"
+                        Margin="0,0,0,10"
+            >
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="MinWidth" Value="24"></Setter>
+                        <Setter Property="MinHeight" Value="24"></Setter>
+                        <Setter Property="Margin" Value="10,0,0,0"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <Label>Інститути: </Label>
+                <Button>Додати</Button>
+                <Button>Видалити</Button>
+                <Button>Сортувати</Button>
+            </StackPanel>
+            <ListView Name="lvInstitutes" MinHeight="150" 
+                      MouseDoubleClick="LvInstitutes_OnMouseDoubleClick">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" />
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <!--Блок кафедр -->
+            <StackPanel x:Name="stpDepartmentsTollbar"
+                        Orientation="Horizontal"
+                        Margin="0,0,0,10"
+            >
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="MinWidth" Value="24"></Setter>
+                        <Setter Property="MinHeight" Value="24"></Setter>
+                        <Setter Property="Margin" Value="10,0,0,0"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <Label>Кафедри: </Label>
+                <Button x:Name="bAddDepartment">Додати</Button>
+                <Button x:Name="bRemoveDepartment">Видалити</Button>
+                <Button x:Name="bSortDepartments">Сортувати</Button>
+            </StackPanel>
+            <ListView  Name="lvDeparments" Height="150" MouseDoubleClick="LvDeparments_OnMouseDoubleClick">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" />
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button x:Name="bSaveChanges" Content="Зберегти зміни"></Button>
-            <Button x:Name="bReturnBack" Margin="35,0,0,0" Content="На головну"
-                    Click="BReturnBack_OnClick"></Button>
+        <!--3 стовпчик-->
+        <StackPanel Grid.Row="0" Grid.Column="2" Margin="10" >
+            <StackPanel Margin="10">
+                <Label Content="Назва навчального закладу"/>
+                <TextBox x:Name="tbInstitutionName"
+                         TextChanged="tbTextEmptyObserver"></TextBox>
+            
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                    <Label>Рейтинг:</Label>
+                    <TextBox x:Name="tbInstitutionRating"  MinWidth="40" TextChanged="tbTextEmptyObserver" />
+                </StackPanel>
+                <Label Content="Контакти:"/>
+                <Label Content="Директор навчального закладу:" Target="tbHeadOfDepartment"/>
+                <TextBox x:Name="tbHeadOfDepartment" TextChanged="tbTextEmptyObserver"/>
+                <Label Content="Номер телефону:"/>
+                <TextBox x:Name="tbInstitutionPhoneNumber" TextChanged="tbTextEmptyObserver"/>
+                <Label Content="Інформація:"/>
+                <Label Content="Кількість студентів"/>
+                <TextBox x:Name="tbNumberOfStudents"/>
+                <Button Margin="0,15,0,0"
+                        x:Name="bSaveDepartment"
+                        Click="BSaveDepartment_OnClick">Зберегти</Button>
+            </StackPanel>
         </StackPanel>
+        
+        
+        
     </Grid>
 </Page>

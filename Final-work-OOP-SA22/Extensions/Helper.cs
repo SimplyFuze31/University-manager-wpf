@@ -87,9 +87,9 @@ public static class Helper
         return new Person(name, lastname);
     }
     
-    private static List<Institute> GenerateInstitutes(int count)
+    private static ExtendedList<Institute> GenerateInstitutes(int count)
     {
-        List<Institute> institutes = new();
+        ExtendedList<Institute> institutes = new();
 
         EducationalInstitutionFactory factory;
         Random random = new();
@@ -107,9 +107,9 @@ public static class Helper
     }
     
     //
-    private static List<Department> GenerateDepartments(int count)
+    private static ExtendedList<Department> GenerateDepartments(int count)
     {
-        List<Department> departments = new();
+        ExtendedList<Department> departments = new();
         Random random = new();
         EducationalInstitutionFactory factory;
         for (int i = 0; i < count; i++)
@@ -123,10 +123,10 @@ public static class Helper
         return departments;
     }
     //
-    public static List<University> GenerateUniversities(int count)
+    public static ExtendedList<University> GenerateUniversities(int count)
     {
         EducationalInstitutionFactory factory;
-        List<University> universities = new();
+        ExtendedList<University> universities = new();
         Random random = new();
         for (int i = 0; i < count; i++)
         {

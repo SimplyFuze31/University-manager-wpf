@@ -6,6 +6,8 @@ namespace Final_work_OOP_SA22
 { 
     public abstract class EducationalInstitution
     {
+        protected Guid _id;
+        public Guid Id { get; }
         protected string _name;
         public string Name
         {
@@ -44,7 +46,7 @@ namespace Final_work_OOP_SA22
             get { return _numberofstudents; }
             set
             {
-                if (value > 0)
+                if (value > 0 && this is Department)
                     _numberofstudents = value;
             }
         }
@@ -82,12 +84,16 @@ namespace Final_work_OOP_SA22
                     _phonenumber = value;
             }
         }
-        
-        public EducationalInstitution() { }
+
+        public EducationalInstitution()
+        {
+            _id = Guid.NewGuid();
+        }
 
         public EducationalInstitution(string name, AccreditationLevels accreditationlevel,
             DateTime foundationDate, Person headOfInstitution)
         {
+            _id = Guid.NewGuid();
             _name = name;
             _accreditationlevel = accreditationlevel;
             _foundationDate = foundationDate;
@@ -96,6 +102,7 @@ namespace Final_work_OOP_SA22
 
         public EducationalInstitution(EducationalInstitution institution)
         {
+            _id = Guid.NewGuid();
             _name = institution._name;
             _accreditationlevel = institution._accreditationlevel;
             _foundationDate = institution._foundationDate;

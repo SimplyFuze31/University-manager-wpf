@@ -4,9 +4,9 @@ namespace Final_work_OOP_SA22;
 
 public class University : EducationalInstitution
 {
-    private List<Institute> _institutelist;
+    private ExtendedList<Institute> _institutelist;
     
-    public List<Institute> Institutes
+    public ExtendedList<Institute> Institutes
     {
         get { return _institutelist; }
         set
@@ -16,7 +16,7 @@ public class University : EducationalInstitution
         }
     }
 
-    public University()
+    public University() : base()
     {
         
     }
@@ -26,7 +26,7 @@ public class University : EducationalInstitution
     }
     
     public University(string name, AccreditationLevels accreditationlevel, DateTime foundationDate, 
-        Person headOfInstitution, List<Institute> institutes) : base(name, accreditationlevel, 
+        Person headOfInstitution, ExtendedList<Institute> institutes) : base(name, accreditationlevel, 
         foundationDate, headOfInstitution)
     {
         _institutelist = institutes;

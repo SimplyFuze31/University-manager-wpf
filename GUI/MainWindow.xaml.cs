@@ -22,7 +22,7 @@ namespace GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public delegate void DataGridDoubleClick(EducationalInstitution edu);
+        public delegate void DataGridDoubleClick(University edu);
         public DataGridDoubleClick DataGridClickHandler { get; set; }
 
         public delegate void StarPageClick();
@@ -32,11 +32,12 @@ namespace GUI
             InitializeComponent();
             StarPageClickHandler = OpenStarPage;
             DataGridClickHandler = OpenChangeInstitutionDataPage;
+            Serealizator.Save(Helper.GenerateUniversities(50));
             OpenStarPage();
             
         }
         
-        private void OpenChangeInstitutionDataPage(EducationalInstitution edu)
+        private void OpenChangeInstitutionDataPage(University edu)
         {
             Main.Content = new ChangeInstitutionDataPage(edu, StarPageClickHandler);
         }
