@@ -1,5 +1,7 @@
 ﻿
 
+using System.Text.RegularExpressions;
+
 namespace Final_work_OOP_SA22
 { 
     public abstract class EducationalInstitution
@@ -8,28 +10,50 @@ namespace Final_work_OOP_SA22
         public string Name
         {
             get { return _name; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    _name = "Noname institution";
+                else if (new Regex(Helper.MatchNamePattern).IsMatch(value))
+                    _name = "Not valid institution name";
+                else
+                    _name = value;
+            }
         }
         protected AccreditationLevels _accreditationlevel;
         public AccreditationLevels AccreditationLevel
         {
             get { return _accreditationlevel; }
+            set { _accreditationlevel = value; }
         }
         protected DateTime _foundationDate;
         public DateTime FoundationDate
         {
             get { return _foundationDate; }
+            set {
+                if (value > DateTime.Now)
+                    _foundationDate = DateTime.Now;
+                else _foundationDate = value;
+
+            }
         }
         protected int _numberofstudents;
         
         public int NumberOfStudents
         {
             get { return _numberofstudents; }
+            set
+            {
+                if (value > 0)
+                    _numberofstudents = value;
+            }
         }
 
         protected Person _headOfInstitution;
         public Person HeadOfInstitution
         {
             get {  return _headOfInstitution; }
+            set { _headOfInstitution = value; }
         }
 
         protected int _rating;

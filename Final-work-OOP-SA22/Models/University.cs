@@ -5,6 +5,16 @@ namespace Final_work_OOP_SA22;
 public class University : EducationalInstitution
 {
     private List<Institute> _institutelist;
+    
+    public List<Institute> Institutes
+    {
+        get { return _institutelist; }
+        set
+        {
+            if (value != null)
+                _institutelist = value;
+        }
+    }
 
     public University()
     {

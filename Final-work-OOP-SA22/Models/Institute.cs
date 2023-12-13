@@ -4,12 +4,26 @@ namespace Final_work_OOP_SA22;
 
 public class Institute : EducationalInstitution
 {
-    private List<Department> departmentsList;
+    private List<Department> _departmentslist;
     
-    public Institute(string name, AccreditationLevels accreditationLevel, DateTime foundationDate, 
-        Person headOfInstitution, List<Department> departmentsList):base(name,accreditationLevel ,foundationDate, headOfInstitution)
+    public List<Department> Departments
     {
-        this.departmentsList = departmentsList;
+        get { return _departmentslist; }
+        set
+        {
+            if (value != null)
+                _departmentslist = value;
+        }
+    }
+
+    public Institute()
+    {
+        
+    }
+    public Institute(string name, AccreditationLevels accreditationLevel, DateTime foundationDate, 
+        Person headOfInstitution, List<Department> departmentslist):base(name,accreditationLevel ,foundationDate, headOfInstitution)
+    {
+        this._departmentslist = departmentslist;
         this._numberofstudents = GetNumberOfStudents();
     }
 
@@ -17,19 +31,19 @@ public class Institute : EducationalInstitution
     {
         this._headOfInstitution = institute._headOfInstitution;
         this._rating = institute._rating;
-        this.departmentsList = institute.departmentsList;
+        this._departmentslist = institute._departmentslist;
     }
     
     public void AddDepartment(Department department)
     {
-        departmentsList.Add(department);
+        _departmentslist.Add(department);
     }
 
     public override int GetNumberOfStudents()
     {
         int numberofstudents = 0;
 
-        foreach (var department in departmentsList)
+        foreach (var department in _departmentslist)
         {
             numberofstudents += department.NumberOfStudents;
         }
@@ -41,7 +55,7 @@ public class Institute : EducationalInstitution
     {
         StringBuilder stringBuilder = new();
 
-        foreach (var department in departmentsList)
+        foreach (var department in _departmentslist)
         {
             stringBuilder.Append(department.ToString()+"\n");
         }

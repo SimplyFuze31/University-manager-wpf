@@ -4,24 +4,26 @@ using Final_work_OOP_SA22.Factories;
 namespace Final_work_OOP_SA22;
 public static class Helper
 {
-    public const string MatchPhonePattern =
-        @"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$";
     
-    public static bool IsValidPhone(string Phone)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(Phone))
-                return false;
-            var r = new Regex(MatchPhonePattern);
-            return r.IsMatch(Phone);
-
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-    }
+    public const string MatchNamePattern = @"(\d)";
+    // public const string MatchPhonePattern =
+    //     @"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$";
+    //
+    // public static bool IsValidPhone(string Phone)
+    // {
+    //     try
+    //     {
+    //         if (string.IsNullOrEmpty(Phone))
+    //             return false;
+    //         var r = new Regex(MatchPhonePattern);
+    //         return r.IsMatch(Phone);
+    //
+    //     }
+    //     catch (Exception)
+    //     {
+    //         throw;
+    //     }
+    // }
     
     static DateTime RandomDay()
     {
@@ -39,6 +41,7 @@ public static class Helper
             s = String.Concat(s, random.Next(10).ToString());
         return s;
     }
+    
 
     public static string GenerateUniversityName()
     {
@@ -69,12 +72,12 @@ public static class Helper
 
     private static string[] Names = new[]
     {
-        "Богдан", "Андрій", "Олександр", "Сергій", "Микола","Василь"
+        "Богдан", "Андрій", "Олександр", "Сергій", "Микола","Василь","Ігор","Владислав","Олег","Надія"
     };
 
     private static string[] LastNames = new[]
     {
-        "Черкес","Медиковський","Микийчук","Костів","Кондратюк","Юзьвак","Стахів"
+        "Черкес","Медиковський","Микийчук","Костів","Кондратюк","Юзьвак","Стахів","Литвин","Філевич"
     };
     private static Person GeneratePerson()
     {
@@ -96,7 +99,7 @@ public static class Helper
             string institutename = InstitutesName[random.Next(0, InstitutesName.Length)];
             int rating = random.Next(50, 100);
             factory = new InstituteFactory(institutename, AccreditationLevels.Institute, RandomDay(),
-                GeneratePerson(),rating,GeneratePhoneNumber(),GenerateDepartments(random.Next(5,15)));
+                GeneratePerson(),rating,GeneratePhoneNumber(),GenerateDepartments(random.Next(3,7)));
             institutes.Add((Institute)factory.GetEducationalInstitution());
         }
     
@@ -120,16 +123,16 @@ public static class Helper
         return departments;
     }
     //
-    public static List<EducationalInstitution> GenerateUniversities(int count)
+    public static List<University> GenerateUniversities(int count)
     {
         EducationalInstitutionFactory factory;
-        List<EducationalInstitution> universities = new();
+        List<University> universities = new();
         Random random = new();
         for (int i = 0; i < count; i++)
         {
             string univertyname = InstitutesName[random.Next(0, InstitutesName.Length)];
             int rating = random.Next(50, 100);
-            var institutes = GenerateInstitutes(random.Next(3,12));
+            var institutes = GenerateInstitutes(random.Next(3,10));
             factory = new UniversityFactory(GenerateUniversityName(), AccreditationLevels.University, RandomDay(),
                 GeneratePerson(),rating,GeneratePhoneNumber(),institutes);
             universities.Add((University)factory.GetEducationalInstitution());

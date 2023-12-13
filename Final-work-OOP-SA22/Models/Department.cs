@@ -6,7 +6,15 @@ public class Department : EducationalInstitution
     public int NumberOfEmployees
     {
         get { return _numberofemployees; }
+        set
+        {
+            if (value > 0)
+                _numberofemployees = value;
+        }
     }
+    
+    
+    
     
     public Department(){}
     public Department(string name, int numberofstudents, int numberofemployees, Person headOfInstitution) 
