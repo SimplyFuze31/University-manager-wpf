@@ -42,6 +42,7 @@ public partial class ChangeInstitutionDataPage : Page
     
     private void BSaveChanges_OnClick(object sender, RoutedEventArgs e)
     {
+        
         _selected_university.Name = tbUniversityName.Text;
         int val;
         bool result = int.TryParse(tbRating.Text, out val);
@@ -224,5 +225,18 @@ public partial class ChangeInstitutionDataPage : Page
         uni.Replace(_selected_university);
         
         Serealizator.Save(uni);
+    }
+
+    private void BRemoveDepartment_OnClick(object sender, RoutedEventArgs e)
+    {
+        ExtendedList<University> uni = Serealizator.Load();
+        
+        _selected_institute = (Institute)lvInstitutes.SelectedItem;
+
+        _selected_institute.Departments.Remove((Department)lvInstitutes.SelectedItem);
+        
+        _selected_university.Institutes.Replace(_selected_institute);
+        
+
     }
 }
