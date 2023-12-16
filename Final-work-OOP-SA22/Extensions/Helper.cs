@@ -2,28 +2,10 @@
 using Final_work_OOP_SA22.Factories;
 
 namespace Final_work_OOP_SA22;
-public static class Helper
-{
-    
-    public const string MatchNamePattern = @"(\d)";
-    // public const string MatchPhonePattern =
-    //     @"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$";
-    //
-    // public static bool IsValidPhone(string Phone)
-    // {
-    //     try
-    //     {
-    //         if (string.IsNullOrEmpty(Phone))
-    //             return false;
-    //         var r = new Regex(MatchPhonePattern);
-    //         return r.IsMatch(Phone);
-    //
-    //     }
-    //     catch (Exception)
-    //     {
-    //         throw;
-    //     }
-    // }
+public static class Helper{
+    public const string MatchNamePattern = "^[А-ЯІЇЄҐа-яіїєґ]{2,}$";
+    public const string MatchFullNamePattern = @"^[А-ЯІЇЄҐа-яіїєґ]{2,}(?:\s[А-ЯІЇЄҐа-яіїєґ]{3,})$";
+    public const string MatchPhoneNumber = @"^\+?[0-9\s()-]{10,}$";
     
     static DateTime RandomDay()
     {

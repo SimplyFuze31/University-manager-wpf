@@ -80,8 +80,10 @@ namespace Final_work_OOP_SA22
             get { return _phonenumber; }
             set
             {
-                //if (Helper.IsValidPhone(value))
+                if (new Regex(Helper.MatchPhoneNumber).IsMatch(value))
                     _phonenumber = value;
+                else
+                    throw new Exception("Невірний номер телефону.");
             }
         }
 

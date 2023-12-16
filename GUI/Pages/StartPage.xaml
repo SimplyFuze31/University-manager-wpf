@@ -16,8 +16,11 @@
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
                         <StackPanel.Resources>
                                 <Style TargetType="Button">
-                                        <Setter Property="Margin" Value="10,0,0,0"></Setter>
-                                        <Setter Property="Padding" Value="0,5"></Setter>
+                                        <Setter Property="Background" Value="Transparent"></Setter>
+                                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                        <Setter Property="BorderBrush" Value="#19A7CE"></Setter>
+                                        <Setter Property="Margin" Value="30,0,0,0"></Setter>
+                                        <Setter Property="Padding" Value="10,5"></Setter>
                                         <Setter Property="VerticalAlignment" Value="Center"></Setter>
                                 </Style>
                         </StackPanel.Resources>
@@ -26,8 +29,15 @@
                                 Click="BAddUniversity_OnClick">Додати</Button>
                         <Button x:Name="bRemoveUniversity">Видалити</Button>
                         <Button>Cортувати</Button>
-                        <Label VerticalAlignment="Center">Сортувати за:</Label>
-                        <ComboBox SelectedValue="Назвою закладу" VerticalAlignment="Center">Назвою закладу
+                        <Label VerticalAlignment="Center" Margin="30,0,0,0">Сортувати за: </Label>
+                        <ComboBox SelectedIndex="0" VerticalAlignment="Center"
+                                  BorderThickness="0" Background="Transparent">
+                                <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="White" />
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White" />
+                                </ComboBox.Resources>
+                                <TextBlock> Назвою закладу</TextBlock>
                         </ComboBox>
                 </StackPanel>
                 <Frame Grid.Row="1"></Frame>

@@ -7,7 +7,7 @@
       FontFamily="Calibri"
       mc:Ignorable="d"
       Title="ChangeInstitutionDataPage" Height="Auto" Width="Auto"
-      MinWidth="800" MinHeight="300">
+      MinWidth="800" MinHeight="300" Foreground="#000080">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="270" ></ColumnDefinition>
@@ -17,23 +17,26 @@
 
         
         <!--1 стовпчик -->
-        <Grid>
+        <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackPanel Margin="10,10,15,0">
+            <StackPanel  x:Name="StpUniversityPanel" Margin="10,10,15,0">
                 <StackPanel.Resources>
                     <Style TargetType="TextBox">
-                        <Setter Property="Margin" Value="6,0,10,0"></Setter>
+                        <Setter Property="Margin" Value="6,5,10,0"></Setter>
+                        <Setter Property="Padding" Value="0,0,0,3"></Setter>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
                     </Style>
                 </StackPanel.Resources>
                 <Label Content="Назва навчального закладу"/>
                 <TextBox x:Name="tbUniversityName"></TextBox>
             
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
-                    <Label>Рейтинг:</Label>
-                    <TextBox x:Name="tbRating"  MinWidth="40" VerticalContentAlignment="Center"/>
+                    <Label VerticalContentAlignment="Center">Рейтинг:</Label>
+                    <TextBox x:Name="tbRating" Height="Auto" MinWidth="40" Margin="0,0,0,3"
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"/>
                 </StackPanel>
                 <Label Content="Контакти:"/>
                 <Label Content="Директор навчального закладу:" Target="tbHeadOfInstitution"/>
@@ -42,13 +45,25 @@
                 <TextBox x:Name="tbPhoneNumber" />
                 <Label Content="Інформація:"/>
                 <Label x:Name="lNumberOfStudents" Content="Кількість студентів: "/>
+                <Label x:Name="lErrorOutput"></Label>
 
             </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10,0,0">
-                <Button x:Name="bSaveChanges" Content="Зберегти зміни" Padding="5"
+            <!-- Save Changes and Home buttons -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" >
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Transparent"></Setter>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                        <Setter Property="BorderBrush" Value="#19A7CE"></Setter>
+                        <Setter Property="Padding" Value="15,0"></Setter>
+                        
+                    </Style>
+                </StackPanel.Resources>
+                <Button x:Name="bSaveChanges" Content="Зберегти зміни" 
                         Click="BSaveChanges_OnClick" 
-                        Margin="5,0,0,5"></Button>
-                <Button x:Name="bReturnBack" Margin="55,0,0,5" Padding="5" Content="На головну"
+                        Margin="10,0,0,5" 
+                ></Button>
+                <Button x:Name="bReturnBack" Margin="55,0,0,5"  Content="На головну"
                         Click="BReturnBack_OnClick"
                 ></Button>
             </StackPanel>
@@ -70,8 +85,10 @@
             >
                 <StackPanel.Resources>
                     <Style TargetType="Button">
-                        <Setter Property="MinWidth" Value="24"></Setter>
-                        <Setter Property="MinHeight" Value="24"></Setter>
+                        <Setter Property="Padding" Value="10,5,10,5"></Setter>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                        <Setter Property="BorderBrush" Value="#19A7CE"/>
+                        <Setter Property="Background" Value="White"></Setter>
                         <Setter Property="Margin" Value="10,0,0,0"></Setter>
                     </Style>
 
@@ -99,12 +116,14 @@
             >
                 <StackPanel.Resources>
                     <Style TargetType="Button">
-                        <Setter Property="MinWidth" Value="24"></Setter>
-                        <Setter Property="MinHeight" Value="24"></Setter>
+                        <Setter Property="Padding" Value="10,5,10,5"></Setter>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                        <Setter Property="BorderBrush" Value="#19A7CE"/>
+                        <Setter Property="Background" Value="White"></Setter>
                         <Setter Property="Margin" Value="10,0,0,0"></Setter>
                     </Style>
                 </StackPanel.Resources>
-                <Label>Кафедри: </Label>
+                <Label VerticalContentAlignment="Center">Кафедри: </Label>
                 <Button x:Name="bAddDepartment">Додати</Button>
                 <Button x:Name="bRemoveDepartment" Click="BRemoveDepartment_OnClick">Видалити</Button>
             </StackPanel>
@@ -134,7 +153,9 @@
                 
                 <StackPanel.Resources>
                     <Style TargetType="TextBox">
-                        <Setter Property="Margin" Value="5,0,0,0"></Setter>
+                        <Setter Property="Margin" Value="6,5,10,0"></Setter>
+                        <Setter Property="Padding" Value="0,0,0,3"></Setter>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
                     </Style>
                 </StackPanel.Resources>
             <Label Content="Назва навчального закладу"/>
@@ -154,17 +175,23 @@
             <TextBox x:Name="tbNumberOfStudents"/>
             <Label x:Name="lInfo"></Label>
             </StackPanel>
-            <StackPanel Grid.Row="1">
-               
-                <Button Margin="15,15,10,0"
-                        x:Name="bSaveDepartment"
-                        Click="BSaveDepartment_OnClick">Зберегти</Button>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" 
+                        HorizontalAlignment="Stretch">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Transparent"></Setter>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                        <Setter Property="BorderBrush" Value="#19A7CE"></Setter>
+                        <Setter Property="Padding" Value="95,0"></Setter>
+                        <Setter Property="Margin" Value="15,0,15,5"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <Button x:Name="bSaveDepartment"
+                        Click="BSaveDepartment_OnClick"> Зберегти
+                        
+                </Button>
             </StackPanel>
         </Grid>
         
-        
-        
-        
     </Grid>
-    
 </Page>

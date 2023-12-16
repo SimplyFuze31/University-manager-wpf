@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Final_work_OOP_SA22;
 using Final_work_OOP_SA22.Extensions;
+using Final_work_OOP_SA22.Factories;
 
 namespace GUI.Pages;
 
@@ -42,20 +43,30 @@ public partial class ChangeInstitutionDataPage : Page
     
     private void BSaveChanges_OnClick(object sender, RoutedEventArgs e)
     {
+        try
+        {
+            if (CheckTextBoxEmpty(StpUniversityPanel.Children))
+                throw new Exception("Поля не можуть бути пустими") ;
+            _selected_university.Name = tbUniversityName.Text;
+            int val;
+            bool result = int.TryParse(tbRating.Text, out val);
+            if (result) 
+                _selected_university.Rating = val;
+            _selected_university.HeadOfInstitution = new Person(tbHeadOfInstitution.Text);
+            _selected_university.PhoneNumber = tbPhoneNumber.Text;
+            ExtendedList<University> uni = Serealizator.Load();
+            if(uni.Exists(u => u.Id == _selected_university.Id))
+                uni.Replace(_selected_university);
+            else
+                uni.Add(_selected_university);
+            Serealizator.Save(uni);
+            _backpageclick();
+        }
+        catch (Exception exception)
+        {
+            lErrorOutput.Content = exception.Message;
+        }
         
-        _selected_university.Name = tbUniversityName.Text;
-        int val;
-        bool result = int.TryParse(tbRating.Text, out val);
-        if (result) 
-            _selected_university.Rating = val;
-        _selected_university.HeadOfInstitution = new Person(tbHeadOfInstitution.Text);
-        _selected_university.PhoneNumber = tbPhoneNumber.Text;
-        
-
-        ExtendedList<University> uni = Serealizator.Load();
-        uni.Replace(_selected_university);
-        Serealizator.Save(uni);
-        _backpageclick();
     }
     
     private void LvInstitutes_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -97,9 +108,25 @@ public partial class ChangeInstitutionDataPage : Page
     private void BAddInstitute_OnClick(object sender, RoutedEventArgs e)
     {
         IsDepartment = false;
-        _selected_institute = new Institute();
-        SwitchDepartmentTextBox();
         
+        SwitchDepartmentTextBox();
+        TextBoxCleaner(stpDepartmentPanel.Children);
+        
+        _selected_institute = new Institute(Guid.NewGuid(), "Новий інститут", AccreditationLevels.Institute,
+            DateTime.Now, new Person("Директор інституту"), new ExtendedList<Department>())
+        {
+            Rating = 0,
+            PhoneNumber = "0000000000",
+        };
+        _intitut = _selected_institute;
+        _selected_university.Institutes.Add(_selected_institute);
+        lvInstitutes.Items.Refresh();
+        tbInstitutionName.Text = _selected_institute.Name;
+        tbInstitutionRating.Text = _selected_institute.Rating.ToString();
+        tbHeadOfDepartment.Text = _selected_institute.HeadOfInstitution.ToString();
+        tbInstitutionPhoneNumber.Text = _selected_institute.PhoneNumber;
+        tbNumberOfStudents.Text = "0";
+
     }
 
     private void BSaveDepartment_OnClick(object sender, RoutedEventArgs e)
@@ -135,7 +162,8 @@ public partial class ChangeInstitutionDataPage : Page
             
             uni.Replace(new University(_selected_university));
             Serealizator.Save(uni);
-            Refresh(_selected_university);
+            lvInstitutes.Items.Refresh();
+            lvDeparments.Items.Refresh();
             TextBoxCleaner(stpDepartmentPanel.Children);
             lInfo.Content = "Зміни збережено";
         }
@@ -225,17 +253,25 @@ public partial class ChangeInstitutionDataPage : Page
         uni.Replace(_selected_university);
         
         Serealizator.Save(uni);
+        lvInstitutes.Items.Refresh();
+        TextBoxCleaner(stpDepartmentPanel.Children);
     }
 
     private void BRemoveDepartment_OnClick(object sender, RoutedEventArgs e)
     {
         ExtendedList<University> uni = Serealizator.Load();
-        
-        _selected_institute = (Institute)lvInstitutes.SelectedItem;
+        try
+        {
+            _selected_institute = (Institute)lvInstitutes.SelectedItem;
 
-        _selected_institute.Departments.Remove((Department)lvInstitutes.SelectedItem);
-        
-        _selected_university.Institutes.Replace(_selected_institute);
+            _selected_institute.Departments.Remove((Department)lvDeparments.SelectedItem);
+            _selected_university.Institutes.Replace(_selected_institute);
+            lvDeparments.Items.Refresh();
+        }
+        catch (Exception exception) { }
+
+        uni.Replace(_selected_university);
+        Serealizator.Save(uni);
         
 
     }
