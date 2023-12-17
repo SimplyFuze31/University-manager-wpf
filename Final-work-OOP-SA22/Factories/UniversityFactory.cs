@@ -4,11 +4,11 @@ public class UniversityFactory : EducationalInstitutionFactory
 {
     private ExtendedList<Institute> _instituteslist;
 
-    public UniversityFactory(Guid id,string name, AccreditationLevels accreditationLevel, DateTime foundationdate,
-        Person headofinstitution, int rating, string phonenumber, ExtendedList<Institute> instituteslist) : base(name, accreditationLevel, foundationdate, headofinstitution, rating, phonenumber)
+    public UniversityFactory(string name, DateTime foundationdate,
+        Person headofinstitution, int rating, string phonenumber, ExtendedList<Institute> institutes) : base(name, foundationdate, headofinstitution, rating, phonenumber)
     {
-        _id = id;
-        _instituteslist = instituteslist;
+        _instituteslist = institutes;
+        _accreditationlevel = AccreditationLevels.University;
     }
 
     public override EducationalInstitution GetEducationalInstitution()

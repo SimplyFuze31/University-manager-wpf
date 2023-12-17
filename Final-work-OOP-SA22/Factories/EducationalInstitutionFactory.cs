@@ -18,11 +18,11 @@ public abstract class EducationalInstitutionFactory{
     protected string _phonenumber;
 
     public EducationalInstitutionFactory() { }
-    public EducationalInstitutionFactory(string name, AccreditationLevels accreditationLevel, DateTime foundationdate,
+    public EducationalInstitutionFactory(string name, DateTime foundationdate,
         Person headofinstitution, int rating, string phonenumber)
     {
+        _id = Guid.NewGuid();
         _name = name;
-        _accreditationlevel = accreditationLevel;
         _foundationDate = foundationdate;
         _headOfInstitution = headofinstitution;
         _rating = rating;

@@ -47,18 +47,17 @@ public partial class ChangeInstitutionDataPage : Page
         {
             if (CheckTextBoxEmpty(StpUniversityPanel.Children))
                 throw new Exception("Поля не можуть бути пустими") ;
-            _selected_university.Name = tbUniversityName.Text;
             int val;
-            bool result = int.TryParse(tbRating.Text, out val);
-            if (result) 
-                _selected_university.Rating = val;
-            _selected_university.HeadOfInstitution = new Person(tbHeadOfInstitution.Text);
-            _selected_university.PhoneNumber = tbPhoneNumber.Text;
+            int.TryParse(tbRating.Text, out val);
+            
+            UniversityFactory factory = new(tbUniversityName.Text , DateTime.Now, new Person(tbHeadOfInstitution.Text), 
+                val, tbPhoneNumber.Text , new ExtendedList<Institute>());
+            
             ExtendedList<University> uni = Serealizator.Load();
             if(uni.Exists(u => u.Id == _selected_university.Id))
-                uni.Replace(_selected_university);
+                uni.Replace(factory.GetEducationalInstitution() as University);
             else
-                uni.Add(_selected_university);
+                uni.Add(factory.GetEducationalInstitution() as University);
             Serealizator.Save(uni);
             _backpageclick();
         }
@@ -74,17 +73,16 @@ public partial class ChangeInstitutionDataPage : Page
         lInfo.Content = string.Empty;
         IsDepartment = false;
         _selected_institute = (Institute)lvInstitutes.SelectedItem;
-        
         lvDeparments.ItemsSource = _selected_institute.Departments;
-
-        _intitut = _selected_institute;
-
-        tbInstitutionName.Text = _intitut.Name;
-        tbInstitutionRating.Text = _intitut.Rating.ToString();
-        tbHeadOfDepartment.Text = _intitut.HeadOfInstitution.ToString();
+        SwitchDepartmentTextBox();
+        #region Entering data in a Textbox
+        tbInstitutionName.Text = _selected_institute.Name;
+        tbInstitutionRating.Text = _selected_institute.Rating.ToString();
+        tbHeadOfDepartment.Text = _selected_institute.HeadOfInstitution.ToString();
         tbInstitutionPhoneNumber.Text = _intitut.PhoneNumber;
-        tbNumberOfStudents.IsReadOnly = true;
-        tbNumberOfStudents.Text = _intitut.GetNumberOfStudents().ToString();
+        tbNumberOfStudents.Text = _selected_institute.GetNumberOfStudents().ToString();
+        #endregion
+        
     }
 
     private void LvDeparments_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -96,13 +94,15 @@ public partial class ChangeInstitutionDataPage : Page
        
         
         _intitut = institute;
-
+        #region Entering data in a Textbox
         tbInstitutionName.Text = _intitut.Name;
         tbInstitutionRating.Text = _intitut.Rating.ToString();
         tbHeadOfDepartment.Text = _intitut.HeadOfInstitution.ToString();
         tbInstitutionPhoneNumber.Text = _intitut.PhoneNumber;
-        tbNumberOfStudents.IsReadOnly = false;
         tbNumberOfStudents.Text = _intitut.GetNumberOfStudents().ToString();
+        SwitchDepartmentTextBox();
+        #endregion
+
     }
     
     private void BAddInstitute_OnClick(object sender, RoutedEventArgs e)
@@ -112,20 +112,19 @@ public partial class ChangeInstitutionDataPage : Page
         SwitchDepartmentTextBox();
         TextBoxCleaner(stpDepartmentPanel.Children);
         
-        _selected_institute = new Institute(Guid.NewGuid(), "Новий інститут", AccreditationLevels.Institute,
-            DateTime.Now, new Person("Директор інституту"), new ExtendedList<Department>())
-        {
-            Rating = 0,
-            PhoneNumber = "0000000000",
-        };
-        _intitut = _selected_institute;
+        var factory = new InstituteFactory("Новий інститут", DateTime.Today, new Person("Директор Інституту"), 
+            0 , "0000000000", new ExtendedList<Department>());
+        _selected_institute = factory.GetEducationalInstitution() as Institute;
+        
         _selected_university.Institutes.Add(_selected_institute);
-        lvInstitutes.Items.Refresh();
+        
         tbInstitutionName.Text = _selected_institute.Name;
         tbInstitutionRating.Text = _selected_institute.Rating.ToString();
         tbHeadOfDepartment.Text = _selected_institute.HeadOfInstitution.ToString();
-        tbInstitutionPhoneNumber.Text = _selected_institute.PhoneNumber;
+        //tbInstitutionPhoneNumber.Text = _selected_institute.PhoneNumber;
         tbNumberOfStudents.Text = "0";
+        
+        lvInstitutes.Items.Refresh();
 
     }
 
@@ -142,7 +141,7 @@ public partial class ChangeInstitutionDataPage : Page
             if (int.TryParse(tbInstitutionRating.Text, out val))
                 _intitut.Rating = val;
 
-
+            
             //Перевірємо чи це є кафедра
             if (IsDepartment)
             {
@@ -216,6 +215,7 @@ public partial class ChangeInstitutionDataPage : Page
             }
         }
     }
+    
 
     private void Refresh(University uni)
     {

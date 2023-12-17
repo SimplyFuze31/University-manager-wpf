@@ -41,8 +41,8 @@
                 <Label Content="Контакти:"/>
                 <Label Content="Директор навчального закладу:" Target="tbHeadOfInstitution"/>
                 <TextBox x:Name="tbHeadOfInstitution"/>
-                <Label Content="Номер телефону:"/>
-                <TextBox x:Name="tbPhoneNumber" />
+                <Label Content="Номер телефону:" />
+                <TextBox x:Name="tbPhoneNumber" DataContext= "{Binding ElementName=_selected_institute}" Text="{Binding Path= PhoneNumber}" />
                 <Label Content="Інформація:"/>
                 <Label x:Name="lNumberOfStudents" Content="Кількість студентів: "/>
                 <Label x:Name="lErrorOutput"></Label>
