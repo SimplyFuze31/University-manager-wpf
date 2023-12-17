@@ -45,7 +45,7 @@
                 <TextBox x:Name="tbPhoneNumber" DataContext= "{Binding ElementName=_selected_institute}" Text="{Binding Path= PhoneNumber}" />
                 <Label Content="Інформація:"/>
                 <Label x:Name="lNumberOfStudents" Content="Кількість студентів: "/>
-                <Label x:Name="lErrorOutput"></Label>
+                <TextBlock TextWrapping="WrapWithOverflow" x:Name="tblErrorUniversityPanel"></TextBlock>
 
             </StackPanel>
             <!-- Save Changes and Home buttons -->
@@ -71,73 +71,83 @@
        
 
         <!--2 стовчик-->
-        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,10,0,10">
-            <StackPanel.Resources>
+        <Grid Grid.Row="0" Grid.Column="1" Margin="0,10,0,10">
+            <Grid.Resources>
                 <Style TargetType="ListView">
                     <Setter Property="BorderThickness" Value="0,1,0,0"></Setter>
                     <Setter Property="Margin" Value="0,5,15,0"></Setter>
                 </Style>
-            </StackPanel.Resources>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
             <!--Блок інститутів-->
-            <StackPanel x:Name="stpInstitutesTollbar"
-                        Orientation="Horizontal"
-                        Margin="0,0,0,5"
-            >
-                <StackPanel.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="Padding" Value="10,5,10,5"></Setter>
-                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
-                        <Setter Property="BorderBrush" Value="#19A7CE"/>
-                        <Setter Property="Background" Value="White"></Setter>
-                        <Setter Property="Margin" Value="10,0,0,0"></Setter>
-                    </Style>
+            <StackPanel>
+                <StackPanel Grid.Row="0" x:Name="stpInstitutesTollbar"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,5"
+                >
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="10,5,10,5"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                            <Setter Property="BorderBrush" Value="#19A7CE"/>
+                            <Setter Property="Background" Value="White"></Setter>
+                            <Setter Property="Margin" Value="10,0,0,0"></Setter>
+                        </Style>
 
-                </StackPanel.Resources>
-                <Label>Інститути: </Label>
-                <Button Click="BAddInstitute_OnClick" x:Name="bAddInstitute">Додати</Button>
-                <Button x:Name="bDeleteInstitute" Click="BDeleteInstitute_OnClick">Видалити</Button>
+                    </StackPanel.Resources>
+                    <Label>Інститути: </Label>
+                    <Button Click="BAddInstitute_OnClick" x:Name="bAddInstitute">Додати</Button>
+                    <Button x:Name="bDeleteInstitute" Click="BDeleteInstitute_OnClick">Видалити</Button>
+                </StackPanel>
+                <ListView Name="lvInstitutes" Height="180"
+                          MouseDoubleClick="LvInstitutes_OnMouseDoubleClick"
+                >
+                    <ListView.ItemTemplate >
+                        <DataTemplate  >
+                            <WrapPanel >
+                                <TextBlock Text="{Binding Path=Name}" FontWeight="Bold"/>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackPanel>
-            <ListView Name="lvInstitutes" MinHeight="150" 
-                      MouseDoubleClick="LvInstitutes_OnMouseDoubleClick"
-                      >
-                <ListView.ItemTemplate >
-                    <DataTemplate  >
-                        <WrapPanel >
-                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold"/>
-                        </WrapPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            
             
             <!--Блок кафедр -->
-            <StackPanel x:Name="stpDepartmentsTollbar"
-                        Orientation="Horizontal"
-                        Margin="0,10,0,5"
-            >
-                <StackPanel.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="Padding" Value="10,5,10,5"></Setter>
-                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
-                        <Setter Property="BorderBrush" Value="#19A7CE"/>
-                        <Setter Property="Background" Value="White"></Setter>
-                        <Setter Property="Margin" Value="10,0,0,0"></Setter>
-                    </Style>
-                </StackPanel.Resources>
-                <Label VerticalContentAlignment="Center">Кафедри: </Label>
-                <Button x:Name="bAddDepartment">Додати</Button>
-                <Button x:Name="bRemoveDepartment" Click="BRemoveDepartment_OnClick">Видалити</Button>
+            <StackPanel Grid.Row="1">
+                <StackPanel x:Name="stpDepartmentsTollbar"
+                            Orientation="Horizontal"
+                            Margin="0,10,0,5">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="10,5,10,5"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                            <Setter Property="BorderBrush" Value="#19A7CE"/>
+                            <Setter Property="Background" Value="White"></Setter>
+                            <Setter Property="Margin" Value="10,0,0,0"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label VerticalContentAlignment="Center">Кафедри: </Label>
+                    <Button x:Name="bAddDepartment" Click="BAddDepartment_OnClick">Додати</Button>
+                    <Button x:Name="bRemoveDepartment" Click="BRemoveDepartment_OnClick">Видалити</Button>
+                </StackPanel>
+                <ListView  Name="lvDeparments" Height="180" MouseDoubleClick="LvDeparments_OnMouseDoubleClick"
+                           BorderThickness="0,1,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" />
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackPanel>
-            <ListView  Name="lvDeparments" Height="150" MouseDoubleClick="LvDeparments_OnMouseDoubleClick"
-                       BorderThickness="0,1,0,0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <WrapPanel>
-                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" />
-                        </WrapPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+            
+        </Grid>
         <!--3 стовпчик--> 
 
 
@@ -173,7 +183,7 @@
             <Label Content="Інформація:"/>
             <Label Content="Кількість студентів"/>
             <TextBox x:Name="tbNumberOfStudents"/>
-            <Label x:Name="lInfo"></Label>
+            <TextBlock TextWrapping="WrapWithOverflow" x:Name="tblErrorDepartmentPanel"></TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal" 
                         HorizontalAlignment="Stretch">

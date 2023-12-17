@@ -1,6 +1,7 @@
 ﻿
 using System.Text;
 using Final_work_OOP_SA22;
+using Final_work_OOP_SA22.Extensions;
 
 
 Console.OutputEncoding = Encoding.UTF8;

@@ -3,7 +3,7 @@
 namespace Final_work_OOP_SA22.Controllers;
 
 public class UniversityController{
-    private University? _university;
+    private readonly University? _university;
 
     public UniversityController(University university)
     {
@@ -14,14 +14,10 @@ public class UniversityController{
     {
         if (_university != null)
         {
-            ExtendedList<University> uni = Serealizator.Load();
-            if(uni.Exists(u => u.Id == _university.Id))
-                EditUniversity();
-            else
-            {
-                uni.Add(_university);
-                Serealizator.Save(uni);
-            }
+            var uni = Serealizator.Load();
+            
+            uni.Insert(0,_university);
+            Serealizator.Save(uni);
         }
     }
 
@@ -29,7 +25,7 @@ public class UniversityController{
     {
         if (_university != null)
         {
-            ExtendedList<University> uni = Serealizator.Load();
+            var uni = Serealizator.Load();
             uni.Replace(_university);
             Serealizator.Save(uni);
         }
@@ -39,37 +35,31 @@ public class UniversityController{
     {
         if (_university != null)
         {
-            ExtendedList<University> uni = Serealizator.Load();
-            uni.Remove(_university);
-            Serealizator.Save(uni);
+            var uni = Serealizator.Load();
+                uni.RemoveAt(uni.FindIndex(univer => univer.Id == _university.Id));
+                Serealizator.Save(uni);
+            
         }
     }
 
     public void AddInstitute(Institute? institute)
     {
-        if (institute != null && _university != null)
+        if (institute != null)
         {
-            if (_university.Institutes.Exists(ins => ins.Id == institute.Id))
-            {
-                _university.Institutes.Replace(institute);
-            }
-            else
-            {
-                _university.Institutes.Add(institute);
-            }
-            AddUniversity();
+            _university.Institutes.Insert(0,institute);
+            EditUniversity();
         }
     }
+
 
     public void RemoveInstitute(Institute? institute)
     {
         if (institute != null && _university != null)
-        {
             if (_university.Institutes.Exists(ins => ins.Id == institute.Id))
             {
                 _university.Institutes.Remove(institute);
-                AddUniversity();
+                EditUniversity();
             }
-        }
     }
+    
 }

@@ -1,6 +1,7 @@
 ﻿
 
 using System.Text.RegularExpressions;
+using Final_work_OOP_SA22.Extensions;
 
 namespace Final_work_OOP_SA22
 { 
@@ -15,9 +16,9 @@ namespace Final_work_OOP_SA22
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    _name = "Noname institution";
+                    throw new Exception("Назва навчального закладу не може бути пуста");
                 else if (!(new Regex(Helper.MatchNamePattern).IsMatch(value)))
-                    _name = "Not valid institution name";
+                    throw new Exception(@"Неправильна назва навчального закладу. В назві не має бути ""?><^;/\|{}[]");
                 else
                     _name = value;
             }

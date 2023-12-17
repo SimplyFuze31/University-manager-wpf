@@ -1,9 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 using Final_work_OOP_SA22.Factories;
 
-namespace Final_work_OOP_SA22;
+namespace Final_work_OOP_SA22.Extensions;
 public static class Helper{
-    public const string MatchNamePattern = @"^[А-ЯІЇЄҐа-яіїєґA-Za-z\s]+$";
+    public const string MatchNamePattern = @"^[А-ЯІЇЄҐа-яіїєґ`',.A-Za-z\s]+$";
     public const string MatchFullNamePattern = @"^[А-ЯІЇЄҐа-яіїєґA-Za-z]{2,}(?:\s[А-ЯІЇЄҐа-яіїєґA-Za-z]{3,})?$";
     public const string MatchPhoneNumber = @"^\+?[0-9\s()-]{10,}$";
     

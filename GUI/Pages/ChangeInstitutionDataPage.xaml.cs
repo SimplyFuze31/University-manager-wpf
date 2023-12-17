@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using Final_work_OOP_SA22;
 using Final_work_OOP_SA22.Controllers;
 using Final_work_OOP_SA22.Extensions;
@@ -15,9 +12,10 @@ namespace GUI.Pages;
 public partial class ChangeInstitutionDataPage : Page
 {
     private University _selected_university;
-    private bool IsDepartment;
     private Institute _selected_institute;
-    private EducationalInstitution _intitut;
+    private Department _selected_department;
+    private bool IsDepartment;
+    
     private MainWindow.StarPageClick _backpageclick;
     
     public ChangeInstitutionDataPage()
@@ -48,25 +46,42 @@ public partial class ChangeInstitutionDataPage : Page
         {
             if (CheckTextBoxEmpty(StpUniversityPanel.Children))
                 throw new Exception("Поля не можуть бути пустими") ;
-            int val;
-            int.TryParse(tbRating.Text, out val);
-            UniversityFactory factory = new(tbUniversityName.Text , DateTime.Now, new Person(tbHeadOfInstitution.Text), 
-                val, tbPhoneNumber.Text , new ExtendedList<Institute>());
             UniversityController controller =
-                new UniversityController(factory.GetEducationalInstitution() as University);
+                new UniversityController(_selected_university);
+            UniversityFactory factory = new(tbUniversityName.Text , _selected_university.FoundationDate, new Person(tbHeadOfInstitution.Text), 
+                GetTextBoxInt(tbRating), tbPhoneNumber.Text , _selected_university.Institutes);
+            controller.RemoveUniversity();
+            _selected_university = factory.GetEducationalInstitution() as University;
+            controller = new UniversityController(_selected_university);
             controller.AddUniversity();
             _backpageclick();
         }
         catch (Exception exception)
         {
-            lErrorOutput.Content = exception.Message;
+            tblErrorUniversityPanel.Text = exception.Message;
         }
         
     }
+    private void BAddInstitute_OnClick(object sender, RoutedEventArgs e)
+    {
+        IsDepartment = false;
+        SwitchDepartmentTextBox();
+        TextBoxCleaner(stpDepartmentPanel.Children);
+        
+        var factory = new InstituteFactory("Новий інститут", DateTime.Today, new Person("Директор Інституту"), 
+            0 , "0000000000", new ExtendedList<Department>());
+        
+        var controller = new UniversityController(_selected_university);
+        
+        controller.AddInstitute(factory.GetEducationalInstitution() as Institute);
+        
+        lvInstitutes.Items.Refresh();
+    }
+
     
     private void LvInstitutes_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        lInfo.Content = string.Empty;
+        tblErrorDepartmentPanel.Text = string.Empty;
         IsDepartment = false;
         _selected_institute = (Institute)lvInstitutes.SelectedItem;
         lvDeparments.ItemsSource = _selected_institute.Departments;
@@ -75,7 +90,7 @@ public partial class ChangeInstitutionDataPage : Page
         tbInstitutionName.Text = _selected_institute.Name;
         tbInstitutionRating.Text = _selected_institute.Rating.ToString();
         tbHeadOfDepartment.Text = _selected_institute.HeadOfInstitution.ToString();
-        tbInstitutionPhoneNumber.Text = _intitut.PhoneNumber;
+        tbInstitutionPhoneNumber.Text = _selected_institute.PhoneNumber;
         tbNumberOfStudents.Text = _selected_institute.GetNumberOfStudents().ToString();
         #endregion
         
@@ -83,88 +98,55 @@ public partial class ChangeInstitutionDataPage : Page
 
     private void LvDeparments_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        lInfo.Content = string.Empty;
+        tblErrorDepartmentPanel.Text = string.Empty;
         IsDepartment = true;
         SwitchDepartmentTextBox();
-        var institute = (Department)lvDeparments.SelectedItem;
-       
-        
-        _intitut = institute;
+        _selected_department = (Department)lvDeparments.SelectedItem;
         #region Entering data in a Textbox
-        tbInstitutionName.Text = _intitut.Name;
-        tbInstitutionRating.Text = _intitut.Rating.ToString();
-        tbHeadOfDepartment.Text = _intitut.HeadOfInstitution.ToString();
-        tbInstitutionPhoneNumber.Text = _intitut.PhoneNumber;
-        tbNumberOfStudents.Text = _intitut.GetNumberOfStudents().ToString();
+        tbInstitutionName.Text = _selected_department.Name;
+        tbInstitutionRating.Text = _selected_department.Rating.ToString();
+        tbHeadOfDepartment.Text = _selected_department.HeadOfInstitution.ToString();
+        tbInstitutionPhoneNumber.Text = _selected_department.PhoneNumber;
+        tbNumberOfStudents.Text = _selected_department.GetNumberOfStudents().ToString();
         SwitchDepartmentTextBox();
         #endregion
 
     }
     
-    private void BAddInstitute_OnClick(object sender, RoutedEventArgs e)
-    {
-        IsDepartment = false;
-        
-        SwitchDepartmentTextBox();
-        TextBoxCleaner(stpDepartmentPanel.Children);
-        
-        var factory = new InstituteFactory("Новий інститут", DateTime.Today, new Person("Директор Інституту"), 
-            0 , "0000000000", new ExtendedList<Department>());
-        _selected_institute = factory.GetEducationalInstitution() as Institute;
-        
-        _selected_university.Institutes.Add(_selected_institute);
-        
-        tbInstitutionName.Text = _selected_institute.Name;
-        tbInstitutionRating.Text = _selected_institute.Rating.ToString();
-        tbHeadOfDepartment.Text = _selected_institute.HeadOfInstitution.ToString();
-        //tbInstitutionPhoneNumber.Text = _selected_institute.PhoneNumber;
-        tbNumberOfStudents.Text = "0";
-        
-        lvInstitutes.Items.Refresh();
-
-    }
 
     private void BSaveDepartment_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
-            int val;
-            ExtendedList<University> uni = Serealizator.Load();
-            _intitut.Name = tbInstitutionName.Text;
-            _intitut.HeadOfInstitution = new Person(tbHeadOfDepartment.Text);
-            _intitut.PhoneNumber = tbInstitutionPhoneNumber.Text;
-
-            if (int.TryParse(tbInstitutionRating.Text, out val))
-                _intitut.Rating = val;
-
+            SwitchDepartmentTextBox();
+            
+            EducationalInstitutionFactory factory;
             
             //Перевірємо чи це є кафедра
             if (IsDepartment)
             {
-                var depart = _intitut as Department;
-                if (int.TryParse(tbNumberOfStudents.Text, out val))
-                    depart.NumberOfStudents = val;
+                factory = new DepartmentFactory(tbInstitutionName.Text,GetTextBoxInt(tbNumberOfStudents),
+                    GetTextBoxInt(tbNumberOfStudents),new Person(tbHeadOfDepartment.Text), tbPhoneNumber.Text);
+                var depart = factory.GetEducationalInstitution() as Department;
                 _selected_institute.Departments.Replace(depart);
             }
             else
             {
-                _selected_institute = new Institute(_intitut as Institute);
+                factory = new InstituteFactory(tbInstitutionName.Text,DateTime.MinValue,new Person(tbHeadOfDepartment.Text),GetTextBoxInt(tbInstitutionRating),tbInstitutionPhoneNumber.Text,
+                _selected_institute.Departments);
+
+                var controller = new UniversityController(_selected_university);
+                controller.RemoveInstitute(_selected_institute);
+                controller.AddInstitute(factory.GetEducationalInstitution() as Institute);
             }
             
-            
-            _selected_university.Institutes.Replace(_selected_institute);
-            
-            
-            uni.Replace(new University(_selected_university));
-            Serealizator.Save(uni);
             lvInstitutes.Items.Refresh();
             lvDeparments.Items.Refresh();
             TextBoxCleaner(stpDepartmentPanel.Children);
-            lInfo.Content = "Зміни збережено";
         }
         catch (Exception exception)
         {
-            lInfo.Content = "Невірні дані";  
+            tblErrorDepartmentPanel.Text = exception.Message;  
         }
         
 
@@ -211,6 +193,15 @@ public partial class ChangeInstitutionDataPage : Page
             }
         }
     }
+
+    private int GetTextBoxInt(TextBox tb)
+    {
+        int val;
+        if (int.TryParse(tb.Text, out val))
+            return val;
+        else
+            return -1;
+    }
     
 
     private void Refresh(University uni)
@@ -223,23 +214,6 @@ public partial class ChangeInstitutionDataPage : Page
         tbPhoneNumber.Text = _selected_university.PhoneNumber;
         lNumberOfStudents.Content = $"Кількість студентів: {_selected_university.NumberOfStudents}";
     }
-    private void TbInstitutionRating_OnTextChanged(object sender, TextChangedEventArgs e)
-    {
-        // var tb = (TextBox)sender;
-        //
-        // foreach (UIElement element in stpDepartmentPanel.Children)
-        // {
-        //     try
-        //     {
-        //         if (CheckTextBoxContent((TextBox)element) && element.IsEnabled)
-        //             bSaveDepartment.IsEnabled = true;
-        //         else
-        //             bSaveDepartment.IsEnabled = false;
-        //     }
-        //     catch (Exception exception){}
-        // }
-        
-    }
 
     private void BDeleteInstitute_OnClick(object sender, RoutedEventArgs e)
     {
@@ -250,6 +224,7 @@ public partial class ChangeInstitutionDataPage : Page
         
         Serealizator.Save(uni);
         lvInstitutes.Items.Refresh();
+        lvDeparments.ItemsSource = null;
         TextBoxCleaner(stpDepartmentPanel.Children);
     }
 
@@ -270,5 +245,12 @@ public partial class ChangeInstitutionDataPage : Page
         Serealizator.Save(uni);
         
 
+    }
+
+    private void BAddDepartment_OnClick(object sender, RoutedEventArgs e)
+    {
+        InstituteController controller = new InstituteController(_selected_institute);
+        
+        controller.AddDepartment(_selected_department);
     }
 }
