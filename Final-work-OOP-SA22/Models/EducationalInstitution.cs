@@ -16,7 +16,7 @@ namespace Final_work_OOP_SA22
             {
                 if (string.IsNullOrEmpty(value))
                     _name = "Noname institution";
-                else if (new Regex(Helper.MatchNamePattern).IsMatch(value))
+                else if (!(new Regex(Helper.MatchNamePattern).IsMatch(value)))
                     _name = "Not valid institution name";
                 else
                     _name = value;

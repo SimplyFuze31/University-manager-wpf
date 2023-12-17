@@ -37,7 +37,7 @@ public class Serealizator
         //
         // foreach (var uni in edu)
         // {
-        //     newedu.Add(new University(uni));
+        //     newedu.AddUniversity(new University(uni));
         // }
         return edu;
     }

@@ -3,8 +3,8 @@ using Final_work_OOP_SA22.Factories;
 
 namespace Final_work_OOP_SA22;
 public static class Helper{
-    public const string MatchNamePattern = "^[А-ЯІЇЄҐа-яіїєґ]{2,}$";
-    public const string MatchFullNamePattern = @"^[А-ЯІЇЄҐа-яіїєґ]{2,}(?:\s[А-ЯІЇЄҐа-яіїєґ]{3,})$";
+    public const string MatchNamePattern = @"^[А-ЯІЇЄҐа-яіїєґA-Za-z\s]+$";
+    public const string MatchFullNamePattern = @"^[А-ЯІЇЄҐа-яіїєґA-Za-z]{2,}(?:\s[А-ЯІЇЄҐа-яіїєґA-Za-z]{3,})?$";
     public const string MatchPhoneNumber = @"^\+?[0-9\s()-]{10,}$";
     
     static DateTime RandomDay()

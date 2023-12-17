@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Final_work_OOP_SA22;
+using Final_work_OOP_SA22.Controllers;
 using Final_work_OOP_SA22.Extensions;
 using Final_work_OOP_SA22.Factories;
 
@@ -49,16 +50,11 @@ public partial class ChangeInstitutionDataPage : Page
                 throw new Exception("Поля не можуть бути пустими") ;
             int val;
             int.TryParse(tbRating.Text, out val);
-            
             UniversityFactory factory = new(tbUniversityName.Text , DateTime.Now, new Person(tbHeadOfInstitution.Text), 
                 val, tbPhoneNumber.Text , new ExtendedList<Institute>());
-            
-            ExtendedList<University> uni = Serealizator.Load();
-            if(uni.Exists(u => u.Id == _selected_university.Id))
-                uni.Replace(factory.GetEducationalInstitution() as University);
-            else
-                uni.Add(factory.GetEducationalInstitution() as University);
-            Serealizator.Save(uni);
+            UniversityController controller =
+                new UniversityController(factory.GetEducationalInstitution() as University);
+            controller.AddUniversity();
             _backpageclick();
         }
         catch (Exception exception)
