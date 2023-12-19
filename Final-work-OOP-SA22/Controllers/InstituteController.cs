@@ -11,12 +11,13 @@ public class InstituteController{
             _institute = institute;
     }
 
+    public Institute GetInstitute() => _institute;
 
     public void AddDepartment(Department department)
     {
         if (_institute != null)
         {
-            _institute.Departments.Add(department);
+            _institute += department;
         }
         else 
             throw new Exception("Виберіть інститут");
@@ -26,7 +27,7 @@ public class InstituteController{
     {
         if (_institute != null)
         {
-            _institute.Departments.Remove(department);
+            _institute -= department;
         }
         else
         {

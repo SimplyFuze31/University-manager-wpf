@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Final_work_OOP_SA22;
+using Final_work_OOP_SA22.Controllers;
 using Final_work_OOP_SA22.Extensions;
 
 namespace GUI.Pages;
@@ -14,6 +15,7 @@ public partial class StartPage : Page
     public StartPage(MainWindow.DataGridDoubleClick click )
     {
         InitializeComponent();
+        
         var universities = Serealizator.Load();
         
         dgEducationalInstitution.ItemsSource = universities;
@@ -41,5 +43,14 @@ public partial class StartPage : Page
             var uni = new University();
             _click(uni);
 
+    }
+
+    private void BRemoveUniversity_OnClick(object sender, RoutedEventArgs e)
+    {
+        var controller = new UniversityController((University)dgEducationalInstitution.SelectedItem);
+        controller.RemoveUniversity();
+        dgEducationalInstitution.ItemsSource = null;
+        var universities = Serealizator.Load();
+        dgEducationalInstitution.ItemsSource = universities;
     }
 }

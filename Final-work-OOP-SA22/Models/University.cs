@@ -32,7 +32,7 @@ public class University : EducationalInstitution
         _numberofstudents = GetNumberOfStudents();
     }
     
-    public sealed override int GetNumberOfStudents()
+    public override int GetNumberOfStudents()
     {
         
         int numberofstudents = 0;
@@ -57,7 +57,16 @@ public class University : EducationalInstitution
 
         return stringBuilder.ToString();
     }
-
+    public static University operator +(University university, Institute institute)
+    {
+        university._institutelist.Insert(0,institute);
+        return university;
+    }
+    public static University operator -(University university,Institute institute)
+    {
+        university._institutelist.RemoveAt(university._institutelist.FindIndex(ins => ins.Id == institute.Id));
+        return university;
+    }
     public override string ToString()
     {
         return$"Назва:{Name}\n" +

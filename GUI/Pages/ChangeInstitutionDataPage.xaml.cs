@@ -12,7 +12,7 @@ namespace GUI.Pages;
 public partial class ChangeInstitutionDataPage : Page
 {
     private University _selected_university;
-    private Institute _selected_institute;
+    private Institute? _selected_institute;
     private Department _selected_department;
     private bool IsDepartment;
     
@@ -27,7 +27,12 @@ public partial class ChangeInstitutionDataPage : Page
         InitializeComponent();
         try
         {
-            Refresh(currentUniversity);
+            _selected_university = currentUniversity;
+            tbUniversityName.Text = _selected_university.Name;
+            tbRating.Text = _selected_university.Rating.ToString();
+            tbHeadOfInstitution.Text = _selected_university.HeadOfInstitution.ToString();
+            tbPhoneNumber.Text = _selected_university.PhoneNumber;
+            lNumberOfStudents.Content = $"Кількість студентів: {_selected_university.NumberOfStudents}";
         }
         catch (Exception e) { }
         lvInstitutes.ItemsSource = _selected_university.Institutes;
@@ -119,7 +124,8 @@ public partial class ChangeInstitutionDataPage : Page
         try
         {
             SwitchDepartmentTextBox();
-            
+            var universitycontroller = new UniversityController(_selected_university);
+            var institutecontroller = new InstituteController(_selected_institute);
             EducationalInstitutionFactory factory;
             
             //Перевірємо чи це є кафедра
@@ -127,17 +133,20 @@ public partial class ChangeInstitutionDataPage : Page
             {
                 factory = new DepartmentFactory(tbInstitutionName.Text,GetTextBoxInt(tbNumberOfStudents),
                     GetTextBoxInt(tbNumberOfStudents),new Person(tbHeadOfDepartment.Text), tbPhoneNumber.Text);
-                var depart = factory.GetEducationalInstitution() as Department;
-                _selected_institute.Departments.Replace(depart);
+                institutecontroller.RemoveDepartment(_selected_department);
+                _selected_department = factory.GetEducationalInstitution() as Department;
+                institutecontroller.AddDepartment(_selected_department);
+                universitycontroller.EditInstitute(_selected_institute);
             }
             else
             {
-                factory = new InstituteFactory(tbInstitutionName.Text,DateTime.MinValue,new Person(tbHeadOfDepartment.Text),GetTextBoxInt(tbInstitutionRating),tbInstitutionPhoneNumber.Text,
+                factory = new InstituteFactory(tbInstitutionName.Text,DateTime.MinValue,
+                    new Person(tbHeadOfDepartment.Text),GetTextBoxInt(tbInstitutionRating),tbInstitutionPhoneNumber.Text,
                 _selected_institute.Departments);
 
-                var controller = new UniversityController(_selected_university);
-                controller.RemoveInstitute(_selected_institute);
-                controller.AddInstitute(factory.GetEducationalInstitution() as Institute);
+                
+                universitycontroller.RemoveInstitute(_selected_institute);
+                universitycontroller.AddInstitute(factory.GetEducationalInstitution() as Institute);
             }
             
             lvInstitutes.Items.Refresh();
@@ -207,50 +216,41 @@ public partial class ChangeInstitutionDataPage : Page
     private void Refresh(University uni)
     {
         
-        _selected_university = new University(uni);
-        tbUniversityName.Text = _selected_university.Name;
-        tbRating.Text = _selected_university.Rating.ToString();
-        tbHeadOfInstitution.Text = _selected_university.HeadOfInstitution.ToString();
-        tbPhoneNumber.Text = _selected_university.PhoneNumber;
-        lNumberOfStudents.Content = $"Кількість студентів: {_selected_university.NumberOfStudents}";
+
     }
 
     private void BDeleteInstitute_OnClick(object sender, RoutedEventArgs e)
     {
-        ExtendedList<University> uni = Serealizator.Load();
-        _selected_university.Institutes.Remove(_selected_institute);
+        var universitycontroller = new UniversityController(_selected_university);
         
-        uni.Replace(_selected_university);
-        
-        Serealizator.Save(uni);
+        universitycontroller.RemoveInstitute(_selected_institute);
         lvInstitutes.Items.Refresh();
         lvDeparments.ItemsSource = null;
-        TextBoxCleaner(stpDepartmentPanel.Children);
+        lvDeparments.Items.Refresh();
     }
 
     private void BRemoveDepartment_OnClick(object sender, RoutedEventArgs e)
     {
-        ExtendedList<University> uni = Serealizator.Load();
-        try
-        {
-            _selected_institute = (Institute)lvInstitutes.SelectedItem;
-
-            _selected_institute.Departments.Remove((Department)lvDeparments.SelectedItem);
-            _selected_university.Institutes.Replace(_selected_institute);
-            lvDeparments.Items.Refresh();
-        }
-        catch (Exception exception) { }
-
-        uni.Replace(_selected_university);
-        Serealizator.Save(uni);
+        var institutecontroller = new InstituteController(_selected_institute);
+        var universitycontroller = new UniversityController(_selected_university);
         
-
+        institutecontroller.RemoveDepartment(_selected_department);
+        universitycontroller.EditInstitute(institutecontroller.GetInstitute());
+        lvDeparments.Items.Refresh();
     }
 
     private void BAddDepartment_OnClick(object sender, RoutedEventArgs e)
     {
-        InstituteController controller = new InstituteController(_selected_institute);
+        if (_selected_institute != null) {
+            var controller = new InstituteController(_selected_institute);
         
-        controller.AddDepartment(_selected_department);
+            var factory = new DepartmentFactory("Нова кафедра", 0, 0, 
+                new Person("Ім'я Прізвище"), "0000000000000");
+            
+            _selected_department = factory.GetEducationalInstitution() as Department;
+            controller.AddDepartment(_selected_department);
+            lvDeparments.Items.Refresh();
+        }
+        
     }
 }

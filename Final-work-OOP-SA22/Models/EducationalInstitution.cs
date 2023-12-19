@@ -7,7 +7,7 @@ namespace Final_work_OOP_SA22
 { 
     public abstract class EducationalInstitution
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } 
         
         protected string _name;
         public string Name

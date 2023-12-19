@@ -61,6 +61,17 @@ public class Institute : EducationalInstitution
 
         return stringBuilder.ToString();
     }
+    
+    public static Institute operator +(Institute institute, Department department)
+    {
+        institute._departmentslist.Insert(0,department);
+        return institute;
+    }
+    public static Institute operator -(Institute institute, Department department)
+    {
+        institute._departmentslist.RemoveAt(institute._departmentslist.FindIndex(ins => ins.Id == department.Id));
+        return institute;
+    }
 
     public override string ToString()
     {
