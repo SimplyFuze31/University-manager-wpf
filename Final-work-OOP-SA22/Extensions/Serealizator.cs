@@ -27,18 +27,20 @@ public class Serealizator
 
     public static ExtendedList<University> Load()
     {
-        ExtendedList<University>? edu;
+        ExtendedList<University>? edu = new ExtendedList<University>();
         using (StreamReader reader = new StreamReader(_path))
         {
-            edu =  JsonSerializer.Deserialize<ExtendedList<University>>(reader.ReadToEnd());
+            try
+            {
+                edu =  JsonSerializer.Deserialize<ExtendedList<University>>(reader.ReadToEnd());
+            }
+            catch (JsonException e)
+            {
+                Console.WriteLine(e);
+            }
+            
         }
-
-        // ExtendedList<University> newedu = new();
-        //
-        // foreach (var uni in edu)
-        // {
-        //     newedu.AddUniversity(new University(uni));
-        // }
+        
         return edu;
     }
     

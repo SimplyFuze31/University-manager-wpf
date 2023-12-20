@@ -72,14 +72,16 @@ public partial class ChangeInstitutionDataPage : Page
         IsDepartment = false;
         SwitchDepartmentTextBox();
         TextBoxCleaner(stpDepartmentPanel.Children);
-        
-        var factory = new InstituteFactory("Новий інститут", DateTime.Today, new Person("Директор Інституту"), 
-            0 , "0000000000", new ExtendedList<Department>());
-        
+
+
+        var factory = new InstituteFactory("Новий інститут", DateTime.Today, new Person("Директор Інституту"),
+            0, "0000000000", new ExtendedList<Department>());
+
         var controller = new UniversityController(_selected_university);
-        
+
         controller.AddInstitute(factory.GetEducationalInstitution() as Institute);
-        
+
+        lvInstitutes.ItemsSource = _selected_university.Institutes;
         lvInstitutes.Items.Refresh();
     }
 
@@ -221,22 +223,34 @@ public partial class ChangeInstitutionDataPage : Page
 
     private void BDeleteInstitute_OnClick(object sender, RoutedEventArgs e)
     {
-        var universitycontroller = new UniversityController(_selected_university);
+        try
+        {
+            var universitycontroller = new UniversityController(_selected_university);
         
-        universitycontroller.RemoveInstitute(_selected_institute);
-        lvInstitutes.Items.Refresh();
-        lvDeparments.ItemsSource = null;
-        lvDeparments.Items.Refresh();
+            universitycontroller.RemoveInstitute(_selected_institute);
+            lvInstitutes.Items.Refresh();
+            lvDeparments.ItemsSource = null;
+            lvDeparments.Items.Refresh();
+            TextBoxCleaner(stpDepartmentPanel.Children);
+        }
+        catch (Exception exception)
+        { }
+
     }
 
     private void BRemoveDepartment_OnClick(object sender, RoutedEventArgs e)
     {
-        var institutecontroller = new InstituteController(_selected_institute);
-        var universitycontroller = new UniversityController(_selected_university);
+        try
+        {
+            var institutecontroller = new InstituteController(_selected_institute);
+            var universitycontroller = new UniversityController(_selected_university);
         
-        institutecontroller.RemoveDepartment(_selected_department);
-        universitycontroller.EditInstitute(institutecontroller.GetInstitute());
-        lvDeparments.Items.Refresh();
+            institutecontroller.RemoveDepartment(_selected_department);
+            universitycontroller.EditInstitute(institutecontroller.GetInstitute());
+            lvDeparments.Items.Refresh();
+        }
+        catch (Exception exception) { }
+
     }
 
     private void BAddDepartment_OnClick(object sender, RoutedEventArgs e)

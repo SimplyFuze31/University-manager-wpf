@@ -33,8 +33,8 @@ namespace GUI
             InitializeComponent();
             StarPageClickHandler = OpenStarPage;
             DataGridClickHandler = OpenChangeInstitutionDataPage;
-            var uni = Helper.GenerateUniversities(5);
-            Serealizator.Save(uni);
+            //var uni = Helper.GenerateUniversities(5);
+            //Serealizator.Save(uni);
             OpenStarPage();
             
         }

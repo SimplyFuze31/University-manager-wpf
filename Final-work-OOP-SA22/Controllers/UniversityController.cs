@@ -35,55 +35,17 @@ public class UniversityController{
         }
     }
 
-    public IEnumerable<University> SortUniversities(int parametr,bool OrderBy)
-    {
-
-            IEnumerable<University> sorted;
-            var uni = Serealizator.Load();
-            switch (parametr)
-            {
-                case 0:
-                    if (!OrderBy)
-                        sorted = uni.OrderByDescending(s => s.Name);
-                    else
-                        sorted = uni.OrderBy(s => s.Name);
-                    return sorted;
-                case 1:
-                    if (!OrderBy)
-                        sorted = uni.OrderByDescending(s => s.HeadOfInstitution.ToString());
-                    else
-                        sorted = uni.OrderBy(s => s.HeadOfInstitution.ToString());
-                    return sorted;
-                case 2:
-                    if (!OrderBy)
-                        sorted = uni.OrderByDescending(s => s.Rating);
-                    else
-                        sorted = uni.OrderBy(s => s.Rating);
-                    return sorted;
-                case 3:
-                    if (!OrderBy)
-                        sorted = uni.OrderByDescending(s => s.NumberOfStudents);
-                    else
-                        sorted = uni.OrderBy(s => s.NumberOfStudents);
-                    return sorted;
-                // case 4:
-                //     if (!OrderBy)
-                //         sorted = uni.OrderByDescending(s => s.ShelfLife);
-                //     else
-                //         sorted = uni..OrderBy(s => s.ShelfLife);
-                //     return sorted;
-            }
-            return null;
-        
-    }
-
     public void RemoveUniversity()
     {
         if (_university != null)
         {
+            
             var uni = Serealizator.Load();
+            if (uni.Exists(univer => univer.Id == _university.Id))
+            {
                 uni.RemoveAt(uni.FindIndex(univer => univer.Id == _university.Id));
-                Serealizator.Save(uni);
+            }
+            Serealizator.Save(uni);
             
         }
     }

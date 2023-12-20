@@ -66,14 +66,13 @@ namespace Final_work_OOP_SA22
             get { return _rating; }
             set
             {
-                if (value > 100)
-                    _rating = 100;
-                else if (value < 0)
-                    _rating = 0;
-                else
+                if (value > 0 && value < 100)
                     _rating = value;
+                else
+                    throw new Exception("Невірне значення рейтингу 0 - 100");
             }
         }
+        
 
         protected string _phonenumber;
         public string PhoneNumber
@@ -118,3 +117,4 @@ namespace Final_work_OOP_SA22
     }
     
 }
+

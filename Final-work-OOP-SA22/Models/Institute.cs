@@ -4,7 +4,7 @@ namespace Final_work_OOP_SA22;
 
 public class Institute : EducationalInstitution
 {
-    private ExtendedList<Department> _departmentslist;
+    private ExtendedList<Department>? _departmentslist;
     
     public ExtendedList<Department> Departments
     {
@@ -41,10 +41,16 @@ public class Institute : EducationalInstitution
     public override int GetNumberOfStudents()
     {
         int numberofstudents = 0;
-
-        foreach (var department in _departmentslist)
+        if (_departmentslist != null)
         {
-            numberofstudents += department.NumberOfStudents;
+            
+            IEnumerator<Department> enumerator = Departments.GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                numberofstudents += enumerator.Current.NumberOfStudents;
+            }
+
         }
         
         return numberofstudents;

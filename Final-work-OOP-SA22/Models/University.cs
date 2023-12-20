@@ -4,11 +4,20 @@ namespace Final_work_OOP_SA22;
 
 public class University : EducationalInstitution
 {
-    private ExtendedList<Institute> _institutelist;
+    private ExtendedList<Institute>? _institutelist;
     
     public ExtendedList<Institute> Institutes
     {
-        get { return _institutelist; }
+        get
+        {
+            if (_institutelist != null)
+            {
+                return _institutelist;
+            }
+
+            return new ExtendedList<Institute>();
+
+        }
         set
         {
             _institutelist = value;
@@ -34,16 +43,31 @@ public class University : EducationalInstitution
     
     public override int GetNumberOfStudents()
     {
-        
         int numberofstudents = 0;
-        if (this.Institutes != null)
+        if (_institutelist != null)
         {
-            foreach (var institute in _institutelist)
+            IEnumerator<Institute> enumerator = Institutes.GetEnumerator();
+
+            while (enumerator.MoveNext())
             {
-                numberofstudents += institute.NumberOfStudents;
+                numberofstudents += enumerator.Current.NumberOfStudents;
             }
+
         }
+
         return numberofstudents;
+    }
+    
+
+    public static University operator +(University university, Institute institute)
+    {
+        university._institutelist.Insert(0,institute);
+        return university;
+    }
+    public static University operator -(University university,Institute institute)
+    {
+        university._institutelist.RemoveAt(university._institutelist.FindIndex(ins => ins.Id == institute.Id));
+        return university;
     }
     
     public string GetAllDepartments()
@@ -56,16 +80,6 @@ public class University : EducationalInstitution
         }
 
         return stringBuilder.ToString();
-    }
-    public static University operator +(University university, Institute institute)
-    {
-        university._institutelist.Insert(0,institute);
-        return university;
-    }
-    public static University operator -(University university,Institute institute)
-    {
-        university._institutelist.RemoveAt(university._institutelist.FindIndex(ins => ins.Id == institute.Id));
-        return university;
     }
     public override string ToString()
     {

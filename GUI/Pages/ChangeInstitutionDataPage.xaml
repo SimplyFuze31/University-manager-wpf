@@ -30,7 +30,7 @@
                         <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
                     </Style>
                 </StackPanel.Resources>
-                <Label Content="Назва навчального закладу"/>
+                <Label Content="Назва університету"/>
                 <TextBox x:Name="tbUniversityName"></TextBox>
             
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
@@ -39,7 +39,7 @@
                               HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"/>
                 </StackPanel>
                 <Label Content="Контакти:"/>
-                <Label Content="Директор навчального закладу:" Target="tbHeadOfInstitution"/>
+                <Label Content="Директор університету:" Target="tbHeadOfInstitution"/>
                 <TextBox x:Name="tbHeadOfInstitution"/>
                 <Label Content="Номер телефону:" />
                 <TextBox x:Name="tbPhoneNumber" DataContext= "{Binding ElementName=_selected_institute}" Text="{Binding Path= PhoneNumber}" />
